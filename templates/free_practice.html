@@ -1,0 +1,167 @@
+<!-- Free Practice (PTA) Page -->
+{% set q = code_question if code_question is defined and code_question else question if question is defined and question else None %}
+<div class="free-practice-page">
+    <div class="free-practice-grid">
+        <!-- Question Description Card -->
+        <div class="card question-desc-card" id="question-desc-area">
+            {% if q %}
+            <div class="question-header">
+                <h3 id="free-question-title">{{ q.title }}</h3>
+                <div class="question-controls">
+                    <select id="language-select" class="form-select" name="category"
+                        style="width: auto;"
+                        hx-get="/api/random-code-question"
+                        hx-target="#question-desc-area"
+                        hx-trigger="change"
+                    >
+                        <option value="">全部语言</option>
+                        <option value="Python" {% if q.category == 'Python' %}selected{% endif %}>Python</option>
+                        <option value="C" {% if q.category == 'C' %}selected{% endif %}>C</option>
+                    </select>
+                    <button class="btn btn-outline"
+                        hx-get="/api/random-code-question"
+                        hx-target="#question-desc-area"
+                        hx-include="#language-select">
+                        换一题
+                    </button>
+                </div>
+            </div>
+            <div class="question-desc" id="free-question-desc">
+                <div class="pta-section">
+                    <h4>题目描述</h4>
+                    <p style="white-space:pre-line;">{{ q.description }}</p>
+                </div>
+                {% if q.input_format %}
+                <div class="pta-section">
+                    <h4>输入格式</h4>
+                    <p style="white-space:pre-line;">{{ q.input_format }}</p>
+                </div>
+                {% endif %}
+                {% if q.output_format %}
+                <div class="pta-section">
+                    <h4>输出格式</h4>
+                    <p style="white-space:pre-line;">{{ q.output_format }}</p>
+                </div>
+                {% endif %}
+                {% if q.sample_input %}
+                <div class="pta-section">
+                    <h4>输入样例</h4>
+                    <pre class="pta-sample">{{ q.sample_input }}</pre>
+                </div>
+                {% endif %}
+                {% if q.sample_output %}
+                <div class="pta-section">
+                    <h4>输出样例</h4>
+                    <pre class="pta-sample">{{ q.sample_output }}</pre>
+                </div>
+                {% endif %}
+            </div>
+            <div class="question-meta" id="free-question-meta">
+                <span class="badge badge-category">{{ q.category }}</span>
+                <span class="badge badge-difficulty">{{ q.difficulty }}</span>
+                <span>代码长度限制: 16 KB</span>
+                <span>⏱ 时间限制: {{ q.time_limit_ms }}ms</span>
+                <span>💾 内存限制: {{ q.memory_limit_mb }}MB</span>
+                <span>📚 栈限制: {{ q.stack_limit_mb or 64 }}MB</span>
+            </div>
+            <input type="hidden" id="swapped-question-id" value="{{ q.id }}">
+            <input type="hidden" id="swapped-template-code" value="{{ q.template_code or '' }}">
+            {% else %}
+            <p class="empty-state">暂无编程题，点击"换一题"加载题目。</p>
+            {% endif %}
+        </div>
+
+        <!-- Code Editor Card -->
+        <div class="card code-editor-card">
+            <h4>代码编辑器</h4>
+            <form id="judge-form" hx-post="/api/judge" hx-target="#judge-result" hx-swap="innerHTML">
+                <input type="hidden" name="question_id" id="judge-question-id"
+                    value="{{ q.id if q else '' }}">
+                <input type="hidden" name="language" id="judge-language"
+                    value="{{ q.category if q else 'Python' }}">
+                <textarea id="code-editor" name="code">{{ q.template_code if q else '' }}</textarea>
+                <div class="editor-actions">
+                    <button type="submit" class="btn btn-primary">🚀 提交运行</button>
+                    <button type="button" class="btn btn-outline" id="reset-code-btn">重置代码</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Result Panel -->
+        <div class="card result-card" id="judge-result">
+            <h4>判题结果</h4>
+            <p class="empty-state">提交代码后，结果将在此显示。</p>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    var textarea = document.getElementById('code-editor');
+    if (!textarea) return;
+
+    var judgeLangInput = document.getElementById('judge-language');
+    var initialLang = judgeLangInput ? judgeLangInput.value : 'Python';
+    var cmMode = initialLang === 'C' ? 'text/x-csrc' : 'python';
+    var defaultCode = {{ (q.template_code or '')|tojson|safe if q else '""'}};
+
+    var editor = CodeMirror.fromTextArea(textarea, {
+        mode: cmMode,
+        theme: 'dracula',
+        lineNumbers: true,
+        indentUnit: 4,
+        tabSize: 4,
+        matchBrackets: true,
+        autoCloseBrackets: true,
+        lineWrapping: true,
+        lineHeight: 1.6
+    });
+    // 等宽编程字体，中文回退到微软雅黑
+    editor.getWrapperElement().style.fontFamily = "'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', 'Source Code Pro', 'Microsoft YaHei', monospace";
+    editor.getWrapperElement().style.fontSize = '14px';
+    editor.refresh();
+    editor.setSize(null, '320px');
+
+    // Sync CodeMirror -> textarea before HTMX submit
+    document.getElementById('judge-form').addEventListener('htmx:configRequest', function() {
+        editor.save();
+    });
+
+    // Use event delegation on the desc area (not swapped) for the language select
+    var descArea = document.getElementById('question-desc-area');
+
+    // Language select change -> also update editor mode
+    descArea.addEventListener('change', function(evt) {
+        if (evt.target && evt.target.id === 'language-select') {
+            var mode = evt.target.value === 'C' ? 'text/x-csrc' : 'python';
+            editor.setOption('mode', mode);
+            if (judgeLangInput) judgeLangInput.value = evt.target.value || 'Python';
+        }
+    });
+
+    // After HTMX swaps content into descArea, pick up new question data
+    descArea.addEventListener('htmx:afterSwap', function() {
+        var qid = document.getElementById('swapped-question-id');
+        var tmpl = document.getElementById('swapped-template-code');
+        var catBadge = descArea.querySelector('.badge-category');
+
+        // Update judge form hidden fields
+        var judgeQid = document.getElementById('judge-question-id');
+        if (judgeQid && qid) judgeQid.value = qid.value;
+
+        var newLang = catBadge ? catBadge.textContent.trim() : 'Python';
+        if (judgeLangInput) judgeLangInput.value = newLang;
+        editor.setOption('mode', newLang === 'C' ? 'text/x-csrc' : 'python');
+
+        if (tmpl && tmpl.value !== undefined) {
+            editor.setValue(tmpl.value);
+        }
+    });
+
+    // Reset button: restore default template code
+    document.getElementById('reset-code-btn').addEventListener('click', function() {
+        var tmpl = document.getElementById('swapped-template-code');
+        editor.setValue((tmpl && tmpl.value) ? tmpl.value : defaultCode);
+    });
+})();
+</script>

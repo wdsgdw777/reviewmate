@@ -1,0 +1,90 @@
+<!-- Template: New/Edit Code Question Form (PTA Style) -->
+<div class="modal-header">
+    <h2>{{ '编辑编程题' if q.id else '添加编程题' }}</h2>
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+</div>
+<form hx-post="/api/library/code-question" hx-target="#modal-form-result" hx-swap="innerHTML">
+    <input type="hidden" name="qid" value="{{ q.id }}">
+    <div class="form-row">
+        <div class="form-group">
+            <label class="form-label">标题</label>
+            <input type="text" name="title" class="form-input" value="{{ q.title }}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">分类</label>
+            <select name="category" class="form-select" required>
+                <option value="C" {{ 'selected' if q.category == 'C' else '' }}>C</option>
+                <option value="Python" {{ 'selected' if q.category == 'Python' else '' }}>Python</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">难度</label>
+            <select name="difficulty" class="form-select">
+                <option value="easy" {{ 'selected' if q.difficulty == 'easy' else '' }}>简单</option>
+                <option value="medium" {{ 'selected' if q.difficulty == 'medium' else '' }}>中等</option>
+                <option value="hard" {{ 'selected' if q.difficulty == 'hard' else '' }}>困难</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">标签（逗号分隔）</label>
+        {% set tag_str = ', '.join(q.tags) if q.tags and q.tags is iterable and q.tags is not string else (q.tags if q.tags is string else '') %}
+        <input type="text" name="tags" class="form-input" value="{{ tag_str }}">
+    </div>
+    <div class="form-group">
+        <label class="form-label">题目描述</label>
+        <textarea name="description" class="form-textarea" rows="4" required>{{ q.description }}</textarea>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label class="form-label">输入格式</label>
+            <textarea name="input_format" class="form-textarea" rows="2">{{ q.input_format or '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">输出格式</label>
+            <textarea name="output_format" class="form-textarea" rows="2">{{ q.output_format or '' }}</textarea>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label class="form-label">输入样例</label>
+            <textarea name="sample_input" class="form-textarea" rows="2" style="font-family:monospace;">{{ q.sample_input or '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">输出样例</label>
+            <textarea name="sample_output" class="form-textarea" rows="2" style="font-family:monospace;">{{ q.sample_output or '' }}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">模板代码</label>
+        <textarea name="template_code" class="form-textarea" rows="4" style="font-family:monospace;">{{ q.template_code or '' }}</textarea>
+    </div>
+    <div class="form-group">
+        <label class="form-label">测试用例 (JSON数组)</label>
+        <textarea name="test_cases" class="form-textarea" rows="3" style="font-family:monospace;">{{ q.test_cases | tojson if q.test_cases else '[{"input":"","expected_output":""}]' }}</textarea>
+        <span class="form-hint">格式: [{"input": "...", "expected_output": "..."}, ...]</span>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label class="form-label">时间限制 (ms)</label>
+            <input type="number" name="time_limit_ms" class="form-input" value="{{ q.time_limit_ms or 2000 }}" min="100" max="30000">
+        </div>
+        <div class="form-group">
+            <label class="form-label">内存限制 (MB)</label>
+            <input type="number" name="memory_limit_mb" class="form-input" value="{{ q.memory_limit_mb or 128 }}" min="16" max="1024">
+        </div>
+        <div class="form-group">
+            <label class="form-label">栈限制 (MB)</label>
+            <input type="number" name="stack_limit_mb" class="form-input" value="{{ q.stack_limit_mb or 64 }}" min="16" max="1024">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="form-label">参考解答（可选）</label>
+        <textarea name="solution_code" class="form-textarea" rows="4" style="font-family:monospace;">{{ q.solution_code or '' }}</textarea>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">保存</button>
+        <button type="button" class="btn btn-outline" onclick="closeModal()">取消</button>
+    </div>
+    <div id="modal-form-result"></div>
+</form>

@@ -1,0 +1,276 @@
+<div class="library-page">
+    <!-- Modal Container -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div id="modal-container"></div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" style="display:flex;align-items:center;gap:12px;">
+        <button class="tab-btn active" id="tab-choice" onclick="switchLibTab('choice')">
+            选择题 / 简答题 <span style="font-weight:400;opacity:.7;">({{ q_total }} 道)</span>
+        </button>
+        <button class="tab-btn" id="tab-code" onclick="switchLibTab('code')">
+            编程题 <span style="font-weight:400;opacity:.7;">({{ cq_total }} 道)</span>
+        </button>
+        <span style="margin-left:auto;font-size:.85rem;color:var(--color-text-muted);">
+            共 <strong>{{ q_total + cq_total }}</strong> 道题目
+        </span>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <select class="form-select" id="lib-category" onchange="refreshLib(true)">
+            <option value="">全部分类</option>
+            {% for c in categories %}
+            <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" class="form-input" id="lib-search" placeholder="搜索题目..."
+            onkeyup="if(event.key==='Enter')refreshLib(true)">
+        <button class="btn btn-primary btn-sm" onclick="refreshLib(true)">搜索</button>
+        <button class="btn btn-outline btn-sm" onclick="addQuestion()">+ 添加题目</button>
+        <button class="btn btn-outline btn-sm" onclick="exportSelected()">导出选中</button>
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('import-file-choice').click()">导入选择/简答题</button>
+        <input type="file" id="import-file-choice" accept=".json" style="display:none"
+            onchange="importQuestions(this, 'questions')">
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('import-file-code').click()">导入编程题</button>
+        <input type="file" id="import-file-code" accept=".json" style="display:none"
+            onchange="importQuestions(this, 'code-questions')">
+    </div>
+
+    <!-- Choice/Open Table -->
+    <div class="card" id="lib-choice-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select-all-q" onchange="toggleSelectAll('q-checkbox', this)"></th>
+                    <th>ID</th>
+                    <th>分类</th>
+                    <th>标签</th>
+                    <th>题型</th>
+                    <th>难度</th>
+                    <th>来源</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="lib-choice-tbody">
+                <tr><td colspan="8" class="empty-state">加载中...</td></tr>
+            </tbody>
+        </table>
+        <div class="pagination-bar" id="choice-pagination"></div>
+    </div>
+
+    <!-- Code Table -->
+    <div class="card hidden" id="lib-code-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="select-all-cq" onchange="toggleSelectAll('cq-checkbox', this)"></th>
+                    <th>ID</th>
+                    <th>标题</th>
+                    <th>分类</th>
+                    <th>难度</th>
+                    <th>来源</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="lib-code-tbody">
+                <tr><td colspan="7" class="empty-state">加载中...</td></tr>
+            </tbody>
+        </table>
+        <div class="pagination-bar" id="code-pagination"></div>
+    </div>
+</div>
+
+<script>
+var currentTab = 'choice';
+var pageSize = 50;
+var choicePage = 1;
+var codePage = 1;
+
+function switchLibTab(tab) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('lib-choice-container').classList.toggle('hidden', tab !== 'choice');
+    document.getElementById('lib-code-container').classList.toggle('hidden', tab !== 'code');
+    refreshLib();
+}
+
+function currentPage() {
+    return currentTab === 'choice' ? choicePage : codePage;
+}
+
+function setCurrentPage(p) {
+    if (currentTab === 'choice') choicePage = p; else codePage = p;
+}
+
+function currentOffset() {
+    return (currentPage() - 1) * pageSize;
+}
+
+function renderPagination(total, offset, limit) {
+    var containerId = currentTab === 'choice' ? 'choice-pagination' : 'code-pagination';
+    var container = document.getElementById(containerId);
+    var totalPages = Math.ceil(total / limit);
+    var curPage = Math.floor(offset / limit) + 1;
+
+    if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    var html = '<div class="pagination-inner">';
+    html += '<span class="pagination-info">共 ' + total + ' 条，第 ' + curPage + '/' + totalPages + ' 页</span>';
+    html += '<div class="pagination-btns">';
+
+    // Prev
+    if (curPage > 1) {
+        html += '<button class="btn btn-sm btn-outline" onclick="goToPage(' + (curPage - 1) + ')">上一页</button>';
+    } else {
+        html += '<button class="btn btn-sm btn-outline" disabled>上一页</button>';
+    }
+
+    // Page numbers
+    var start = Math.max(1, curPage - 2);
+    var end = Math.min(totalPages, curPage + 2);
+    if (start > 1) {
+        html += '<button class="btn btn-sm btn-outline" onclick="goToPage(1)">1</button>';
+        if (start > 2) html += '<span class="pagination-ellipsis">...</span>';
+    }
+    for (var i = start; i <= end; i++) {
+        if (i === curPage) {
+            html += '<button class="btn btn-sm btn-primary">' + i + '</button>';
+        } else {
+            html += '<button class="btn btn-sm btn-outline" onclick="goToPage(' + i + ')">' + i + '</button>';
+        }
+    }
+    if (end < totalPages) {
+        if (end < totalPages - 1) html += '<span class="pagination-ellipsis">...</span>';
+        html += '<button class="btn btn-sm btn-outline" onclick="goToPage(' + totalPages + ')">' + totalPages + '</button>';
+    }
+
+    // Next
+    if (curPage < totalPages) {
+        html += '<button class="btn btn-sm btn-outline" onclick="goToPage(' + (curPage + 1) + ')">下一页</button>';
+    } else {
+        html += '<button class="btn btn-sm btn-outline" disabled>下一页</button>';
+    }
+
+    html += '</div></div>';
+    container.innerHTML = html;
+}
+
+function goToPage(page) {
+    setCurrentPage(page);
+    refreshLib();
+}
+
+function refreshLib(resetPage) {
+    if (resetPage) setCurrentPage(1);
+    var cat = document.getElementById('lib-category').value;
+    var search = document.getElementById('lib-search').value;
+    var offset = currentOffset();
+    var params = '?category=' + encodeURIComponent(cat) + '&search=' + encodeURIComponent(search) + '&offset=' + offset + '&limit=' + pageSize;
+    var url = currentTab === 'choice' ? '/api/library/questions' : '/api/library/code-questions';
+    var tbodyId = currentTab === 'choice' ? 'lib-choice-tbody' : 'lib-code-tbody';
+
+    fetch(url + params)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            document.getElementById(tbodyId).innerHTML = data.rows_html;
+            renderPagination(data.total, data.offset, data.limit);
+        })
+        .catch(function() {
+            document.getElementById(tbodyId).innerHTML = '<tr><td colspan="8" class="empty-state">加载失败</td></tr>';
+        });
+}
+
+function refreshLibraryQuestions() {
+    if (currentTab !== 'choice') switchLibTab('choice');
+    else { choicePage = 1; refreshLib(); }
+}
+
+function refreshLibraryCodeQuestions() {
+    if (currentTab !== 'code') switchLibTab('code');
+    else { codePage = 1; refreshLib(); }
+}
+
+function openModal() {
+    document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('modal-container').innerHTML = '';
+}
+
+function addQuestion() {
+    if (currentTab === 'choice') {
+        htmx.ajax('GET', '/api/library/question-form/0', '#modal-container');
+    } else {
+        htmx.ajax('GET', '/api/library/code-question-form/0', '#modal-container');
+    }
+    openModal();
+}
+
+function toggleSelectAll(cls, el) {
+    var checks = document.getElementsByClassName(cls);
+    for (var i = 0; i < checks.length; i++) { checks[i].checked = el.checked; }
+}
+
+function getSelectedIds(cls) {
+    var checks = document.getElementsByClassName(cls);
+    var ids = [];
+    for (var i = 0; i < checks.length; i++) {
+        if (checks[i].checked) ids.push(checks[i].value);
+    }
+    return ids.join(',');
+}
+
+function exportSelected() {
+    var ids, url;
+    if (currentTab === 'choice') {
+        ids = getSelectedIds('q-checkbox');
+        url = '/api/library/export-questions';
+    } else {
+        ids = getSelectedIds('cq-checkbox');
+        url = '/api/library/export-code-questions';
+    }
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = url;
+    form.style.display = 'none';
+    var input = document.createElement('input');
+    input.name = 'ids'; input.value = ids;
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.requestSubmit();
+    document.body.removeChild(form);
+}
+
+function importQuestions(fileInput, type) {
+    var file = fileInput.files[0];
+    if (!file) return;
+    var formData = new FormData();
+    formData.append('file', file);
+    var url = type === 'questions' ? '/api/library/import-questions' : '/api/library/import-code-questions';
+    fetch(url, {method:'POST',body:formData}).then(function(r){return r.text();}).then(function(html){
+        var toast = document.createElement('div');
+        toast.innerHTML = html;
+        document.querySelector('.library-page').insertBefore(toast.firstChild, document.querySelector('.filter-bar'));
+        setTimeout(function(){refreshLib();}, 800);
+    });
+    fileInput.value = '';
+}
+
+// Close modal on overlay click
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+// Initial load
+refreshLib();
+</script>

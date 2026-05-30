@@ -1,0 +1,78 @@
+<!-- Library table partial (loaded via HTMX) -->
+{% if tab == 'code' %}
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>标题</th>
+            <th>分类</th>
+            <th>难度</th>
+            <th>来源</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for q in questions %}
+        <tr>
+            <td>{{ q.id }}</td>
+            <td>{{ q.title }}</td>
+            <td><span class="badge badge-primary">{{ q.category }}</span></td>
+            <td><span class="badge badge-secondary">{{ q.difficulty }}</span></td>
+            <td>{{ q.source }}</td>
+            <td>
+                <button class="btn btn-sm btn-outline" onclick="editQuestion('code', {{ q.id }})">编辑</button>
+                {% if q.source != 'builtin' %}
+                <button class="btn btn-sm btn-danger"
+                        hx-delete="/api/delete-question/{{ q.id }}?qtype=code"
+                        hx-target="closest tr"
+                        hx-swap="outerHTML"
+                        hx-confirm="确定删除此题？">删除</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not questions %}
+        <tr><td colspan="6" class="text-center text-muted">暂无编程题</td></tr>
+        {% endif %}
+    </tbody>
+</table>
+{% else %}
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>分类</th>
+            <th>类型</th>
+            <th>难度</th>
+            <th>标签</th>
+            <th>来源</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for q in questions %}
+        <tr>
+            <td>{{ q.id }}</td>
+            <td><span class="badge badge-primary">{{ q.category }}</span></td>
+            <td>{{ '选择题' if q.type == 'choice' else '简答题' }}</td>
+            <td><span class="badge badge-secondary">{{ q.difficulty }}</span></td>
+            <td>{{ q.tags }}</td>
+            <td>{{ q.source }}</td>
+            <td>
+                <button class="btn btn-sm btn-outline" onclick="editQuestion('normal', {{ q.id }})">编辑</button>
+                {% if q.source != 'builtin' %}
+                <button class="btn btn-sm btn-danger"
+                        hx-delete="/api/delete-question/{{ q.id }}?qtype=normal"
+                        hx-target="closest tr"
+                        hx-swap="outerHTML"
+                        hx-confirm="确定删除此题？">删除</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not questions %}
+        <tr><td colspan="7" class="text-center text-muted">暂无题目</td></tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endif %}

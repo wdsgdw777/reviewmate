@@ -1,0 +1,22 @@
+<!-- "Next question" button after self-assessment -->
+<div class="card" style="text-align:center;">
+    <div class="card-body">
+        <p style="color:var(--color-success);font-size:1.1rem;margin-bottom:16px;">✅ 记录已更新！</p>
+        {% if sm2 %}
+        <div style="font-size:.85rem;color:var(--color-text-secondary);margin-bottom:16px;">
+            <span>下次复习：{{ sm2.next_review }}</span>
+            <span style="margin-left:12px;">间隔：{{ sm2.interval }}天</span>
+            <span style="margin-left:12px;">熟练度：{{ '%.1f' % sm2.easiness }}</span>
+        </div>
+        {% endif %}
+        <button class="btn btn-primary"
+                hx-get="/api/next-question?mode={{ mode }}"
+                hx-target="#question-container"
+                hx-swap="innerHTML">
+            🔄 再来一题
+        </button>
+        <a href="/practice?mode={{ mode }}" class="btn btn-outline" style="margin-left:8px;">
+            切换模式
+        </a>
+    </div>
+</div>

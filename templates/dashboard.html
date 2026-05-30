@@ -1,0 +1,104 @@
+<!-- Dashboard Page -->
+<div class="dashboard">
+    <div class="stat-cards">
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-total">{{ stats.today_completed if stats else 0 }}</div>
+                <div class="stat-label">今日已练习</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">✅</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-correct">{{ stats.total_correct if stats else 0 }}</div>
+                <div class="stat-label">累计正确</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-streak">{{ stats.streak_days if stats else 0 }}</div>
+                <div class="stat-label">连续打卡天数</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-info">
+                <div class="stat-value" id="stat-total-q">{{ stats.total_questions if stats else 0 }}</div>
+                <div class="stat-label">题库总数（选择{{ stats.total_questions - stats.total_code if stats else 0 }} + 编程{{ stats.total_code if stats else 0 }}）</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="card ai-suggestion-card">
+            <div class="card-header">
+                <h2>🎯 错题知识点</h2>
+            </div>
+            <div class="card-body" id="ai-suggestion-content">
+                {% if wrong_tags %}
+                <div class="weak-points">
+                    <p style="margin-bottom:10px;color:var(--color-text-muted);">以下知识点错误率较高，建议重点练习：</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    {% for tag in wrong_tags %}
+                        <a href="/practice?mode=category&tag={{ tag }}"
+                           class="tag-chip" style="text-decoration:none;padding:6px 14px;font-size:.9rem;"
+                           hx-get="/practice?mode=daily"
+                           hx-target="#main-content"
+                           hx-push-url="true">
+                            {{ tag }}
+                        </a>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <p>暂无错题记录，开始练习后这里会显示需要加强的知识点。</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card chart-card">
+            <div class="card-header">
+                <h2>📈 学习趋势</h2>
+            </div>
+            <div class="card-body">
+                <div id="dashboard-chart" style="width:100%;height:280px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    var chartDom = document.getElementById('dashboard-chart');
+    if (!chartDom) return;
+    var chart = echarts.init(chartDom);
+    var option = {
+        tooltip: { trigger: 'axis' },
+        grid: { left: '3%', right: '4%', bottom: '3%', top: '8%', containLabel: true },
+        xAxis: {
+            type: 'category',
+            data: {{ chart_dates | tojson if chart_dates else [] }}
+        },
+        yAxis: { type: 'value', max: 100, axisLabel: { formatter: '{value}%' } },
+        series: [{
+            name: '正确率',
+            type: 'line',
+            data: {{ chart_rates | tojson if chart_rates else [] }},
+            smooth: true,
+            lineStyle: { color: '#6366f1', width: 2.5 },
+            areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+                {offset:0,color:'rgba(99,102,241,0.2)'},{offset:1,color:'rgba(99,102,241,0.02)'}
+            ])},
+            itemStyle: { color: '#6366f1' },
+            symbol: 'circle',
+            symbolSize: 6
+        }]
+    };
+    chart.setOption(option);
+    window.addEventListener('resize', function() { chart.resize(); });
+})();
+</script>

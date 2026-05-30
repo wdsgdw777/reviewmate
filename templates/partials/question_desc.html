@@ -1,0 +1,66 @@
+<!-- PTA Style Question Description Fragment for Free Practice -->
+<div class="question-header">
+    <h3 id="free-question-title">{{ question.title }}</h3>
+    <div class="question-controls">
+        <select id="language-select" class="form-select" name="category"
+            style="width: auto;"
+            hx-get="/api/random-code-question"
+            hx-target="#question-desc-area"
+            hx-trigger="change"
+        >
+            <option value="">全部语言</option>
+            <option value="C" {% if question.category == 'C' %}selected{% endif %}>C</option>
+            <option value="Python" {% if question.category == 'Python' %}selected{% endif %}>Python</option>
+        </select>
+        <button class="btn btn-outline"
+            hx-get="/api/random-code-question"
+            hx-target="#question-desc-area"
+            hx-include="#language-select">
+            换一题
+        </button>
+    </div>
+</div>
+
+<div class="question-desc" id="free-question-desc">
+    <div class="pta-section">
+        <h4>题目描述</h4>
+        <p style="white-space:pre-line;">{{ question.description }}</p>
+    </div>
+    {% if question.input_format %}
+    <div class="pta-section">
+        <h4>输入格式</h4>
+        <p style="white-space:pre-line;">{{ question.input_format }}</p>
+    </div>
+    {% endif %}
+    {% if question.output_format %}
+    <div class="pta-section">
+        <h4>输出格式</h4>
+        <p style="white-space:pre-line;">{{ question.output_format }}</p>
+    </div>
+    {% endif %}
+    {% if question.sample_input %}
+    <div class="pta-section">
+        <h4>输入样例</h4>
+        <pre class="pta-sample">{{ question.sample_input }}</pre>
+    </div>
+    {% endif %}
+    {% if question.sample_output %}
+    <div class="pta-section">
+        <h4>输出样例</h4>
+        <pre class="pta-sample">{{ question.sample_output }}</pre>
+    </div>
+    {% endif %}
+</div>
+
+<div class="question-meta" id="free-question-meta">
+    <span class="badge badge-category">{{ question.category }}</span>
+    <span class="badge badge-difficulty">{{ question.difficulty }}</span>
+    <span>代码长度限制: 16 KB</span>
+    <span>⏱ 时间限制: {{ question.time_limit_ms }}ms</span>
+    <span>💾 内存限制: {{ question.memory_limit_mb }}MB</span>
+    <span>📚 栈限制: {{ question.stack_limit_mb or 64 }}MB</span>
+</div>
+
+<!-- Hidden data for JS to pick up after swap -->
+<input type="hidden" id="swapped-question-id" value="{{ question.id }}">
+<input type="hidden" id="swapped-template-code" value="{{ question.template_code or '' }}">

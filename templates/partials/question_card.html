@@ -1,0 +1,47 @@
+<!-- Question card for daily practice -->
+<div class="card question-card" id="question-card">
+    <div class="card-header">
+        <div class="question-meta-top" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <span class="badge badge-category">{{ question.category }}</span>
+            <span class="badge badge-difficulty">{{ question.difficulty }}</span>
+            <span class="badge badge-type">{{ '选择题' if question.type == 'choice' else '简答题' }}</span>
+            {% if question.tags %}
+            {% for tag in question.tags[:3] %}
+            <span class="badge" style="background:#f1f5f9;color:#64748b;">{{ tag }}</span>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        <pre style="white-space:pre-wrap;font-family:inherit;font-size:1.05rem;line-height:1.7;margin:0 0 16px 0;">{{ question.content }}</pre>
+
+        {% if question.type == 'choice' and question.options %}
+        <div class="options-list" style="display:flex;flex-direction:column;gap:8px;">
+            {% set labels = 'ABCDEFGH' %}
+            {% for opt in question.options %}
+            <button class="btn btn-outline option-btn" style="text-align:left;justify-content:flex-start;"
+                    hx-post="/api/submit-answer"
+                    hx-vals='{"question_id":"{{ question.id }}","question_type":"choice","user_answer":"{{ labels[loop.index0] }}","mode":"{{ mode }}","filter_type":"{{ filter_type }}","filter_value":"{{ filter_value }}"}'
+                    hx-target="#question-container"
+                    hx-swap="innerHTML">
+                <strong style="margin-right:6px;">{{ labels[loop.index0] }}.</strong> {{ opt }}
+            </button>
+            {% endfor %}
+        </div>
+        {% elif question.type == 'open' %}
+        <form class="open-answer-form" style="display:flex;flex-direction:column;gap:12px;"
+              hx-post="/api/submit-answer"
+              hx-target="#question-container"
+              hx-swap="innerHTML">
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="hidden" name="question_type" value="open">
+            <input type="hidden" name="mode" value="{{ mode }}">
+            <input type="hidden" name="filter_type" value="{{ filter_type }}">
+            <input type="hidden" name="filter_value" value="{{ filter_value }}">
+            <textarea name="user_answer" class="form-textarea" rows="5"
+                      placeholder="请输入你的答案..." required></textarea>
+            <button type="submit" class="btn btn-primary" style="align-self:flex-start;">提交答案</button>
+        </form>
+        {% endif %}
+    </div>
+</div>

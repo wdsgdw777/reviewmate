@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - ReviewMate</title>
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <!-- ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+    <!-- highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/clike/clike.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/python/python.min.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <a href="/" class="brand-link">⚡ ReviewMate ☀️</a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/" class="nav-item {{ 'active' if page == 'dashboard' else '' }}">
+                    <span class="nav-icon">📊</span> 仪表盘
+                </a>
+                <a href="/practice" class="nav-item {{ 'active' if page == 'practice' else '' }}">
+                    <span class="nav-icon">📝</span> 每日练习
+                </a>
+                <a href="/practice/free" class="nav-item {{ 'active' if page == 'free_practice' else '' }}">
+                    <span class="nav-icon">💻</span> 自由练习
+                </a>
+                <a href="/library" class="nav-item {{ 'active' if page == 'library' else '' }}">
+                    <span class="nav-icon">📚</span> 我的题库
+                </a>
+                <a href="/stats" class="nav-item {{ 'active' if page == 'stats' else '' }}">
+                    <span class="nav-icon">📈</span> 统计中心
+                </a>
+                <a href="/settings" class="nav-item {{ 'active' if page == 'settings' else '' }}">
+                    <span class="nav-icon">⚙️</span> 设置
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                ReviewMate v1.0 · 间隔重复学习
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content" class="main">
+            <header class="page-header">
+                <h1>{{ title }}</h1>
+            </header>
+            {% include page + '.html' %}
+        </main>
+    </div>
+
+    <!-- Mobile sidebar toggle -->
+    <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+    <script>
+        hljs.highlightAll();
+    </script>
+</body>
+</html>

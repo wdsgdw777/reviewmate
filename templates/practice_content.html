@@ -1,0 +1,147 @@
+<!-- Practice content fragment — returned for HTMX requests targeting #practice-content -->
+{% if mode == 'category' %}
+    {% if filter_type %}
+<!-- Active filter indicator -->
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:8px 14px;background:var(--color-primary-bg);border-radius:8px;">
+    <span style="font-weight:600;color:var(--color-primary);">
+        {% if filter_type == 'assessment' %}
+            {% if filter_value == 'mastered' %}✅ 已掌握
+            {% elif filter_value == 'fuzzy' %}🤔 有点模糊
+            {% elif filter_value == 'failed' %}❌ 完全不会
+            {% elif filter_value == 'unseen' %}🆕 未做过
+            {% endif %}
+        {% else %}
+            🏷️ {{ filter_value }}
+        {% endif %}
+    </span>
+    <span style="color:var(--color-text-muted);font-size:.85rem;">— 筛选练习中</span>
+    <span style="margin-left:auto;font-size:.85rem;color:var(--color-primary);cursor:pointer;text-decoration:underline;"
+          hx-get="/practice?mode=category"
+          hx-target="#practice-content" hx-swap="innerHTML">✕ 取消筛选</span>
+</div>
+    {% else %}
+<!-- Category filter selection -->
+<div class="category-filters">
+    <div class="filter-tabs" style="display:flex;gap:8px;margin-bottom:16px;">
+        <button class="filter-tab active" id="tab-assessment"
+                onclick="switchFilterTab('assessment')"
+                style="padding:8px 20px;border-radius:8px;border:2px solid var(--color-primary);background:var(--color-primary);color:#fff;font-weight:600;cursor:pointer;">
+            📊 按掌握程度
+        </button>
+        <button class="filter-tab" id="tab-tag"
+                onclick="switchFilterTab('tag')"
+                style="padding:8px 20px;border-radius:8px;border:2px solid var(--color-border);background:transparent;color:var(--color-text);font-weight:600;cursor:pointer;">
+            🏷️ 按知识点
+        </button>
+    </div>
+
+    <div id="panel-assessment" class="filter-panel">
+        <p style="color:var(--color-text-muted);margin-bottom:12px;">选择你对自己掌握程度的评价，针对性练习：</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+            <div class="card" style="padding:16px;cursor:pointer;transition:transform 0.15s;border-left:4px solid #22c55e;"
+                 onmouseover="this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.transform=''"
+                 hx-get="/practice?mode=category&filter_type=assessment&filter_value=mastered"
+                 hx-target="#practice-content" hx-swap="innerHTML">
+                <div style="font-weight:700;color:#16a34a;">✅ 已掌握</div>
+                <div style="font-size:2rem;font-weight:800;color:#16a34a;">{{ assessment_counts.get('mastered', 0) }}</div>
+                <div style="font-size:.8rem;color:var(--color-text-muted);">道题已掌握，来巩固一下</div>
+            </div>
+            <div class="card" style="padding:16px;cursor:pointer;transition:transform 0.15s;border-left:4px solid #f59e0b;"
+                 onmouseover="this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.transform=''"
+                 hx-get="/practice?mode=category&filter_type=assessment&filter_value=fuzzy"
+                 hx-target="#practice-content" hx-swap="innerHTML">
+                <div style="font-weight:700;color:#d97706;">🤔 有点模糊</div>
+                <div style="font-size:2rem;font-weight:800;color:#d97706;">{{ assessment_counts.get('fuzzy', 0) }}</div>
+                <div style="font-size:.8rem;color:var(--color-text-muted);">道题不太确定，需要加强</div>
+            </div>
+            <div class="card" style="padding:16px;cursor:pointer;transition:transform 0.15s;border-left:4px solid #ef4444;"
+                 onmouseover="this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.transform=''"
+                 hx-get="/practice?mode=category&filter_type=assessment&filter_value=failed"
+                 hx-target="#practice-content" hx-swap="innerHTML">
+                <div style="font-weight:700;color:#dc2626;">❌ 完全不会</div>
+                <div style="font-size:2rem;font-weight:800;color:#dc2626;">{{ assessment_counts.get('failed', 0) }}</div>
+                <div style="font-size:.8rem;color:var(--color-text-muted);">道题不会，重点攻克</div>
+            </div>
+            <div class="card" style="padding:16px;cursor:pointer;transition:transform 0.15s;border-left:4px solid #6366f1;"
+                 onmouseover="this.style.transform='translateY(-2px)'"
+                 onmouseout="this.style.transform=''"
+                 hx-get="/practice?mode=category&filter_type=assessment&filter_value=unseen"
+                 hx-target="#practice-content" hx-swap="innerHTML">
+                <div style="font-weight:700;color:#4f46e5;">🆕 未做过</div>
+                <div style="font-size:2rem;font-weight:800;color:#4f46e5;">{{ assessment_counts.get('unseen', 0) }}</div>
+                <div style="font-size:.8rem;color:var(--color-text-muted);">道新题等待探索</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel-tag" class="filter-panel" style="display:none;">
+        <p style="color:var(--color-text-muted);margin-bottom:12px;">选择知识点，集中练习薄弱环节：</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            {% for tag in all_tags %}
+            <span class="tag-chip" style="padding:8px 16px;font-size:.9rem;border-radius:20px;background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text);cursor:pointer;transition:all 0.15s;"
+                  onmouseover="this.style.background='var(--color-primary-bg)';this.style.borderColor='var(--color-primary)';"
+                  onmouseout="this.style.background='var(--color-bg)';this.style.borderColor='var(--color-border)';"
+                  hx-get="/practice?mode=category&filter_type=tag&filter_value={{ tag }}"
+                  hx-target="#practice-content" hx-swap="innerHTML">
+                {{ tag }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+    {% endif %}
+{% endif %}
+
+<div id="question-container" class="question-container">
+    {% if question %}
+        {% include 'partials/question_card.html' %}
+    {% elif mode == 'category' and filter_type %}
+    <div class="card empty-state">
+        <div class="card-body text-center">
+            <p style="font-size:1.1rem;margin-bottom:8px;">🎉 该分类暂无题目</p>
+            <span class="btn btn-primary mt-3"
+                  hx-get="/practice?mode=category"
+                  hx-target="#practice-content" hx-swap="innerHTML">🔙 返回分类</span>
+        </div>
+    </div>
+    {% elif mode == 'review' %}
+    <div class="card empty-state">
+        <div class="card-body text-center">
+            <p style="font-size:1.1rem;margin-bottom:8px;">🎉 暂无待复习的题目</p>
+            <button class="btn btn-primary mt-3"
+                    hx-get="/practice?mode=daily"
+                    hx-target="#practice-content" hx-swap="innerHTML">📝 去每日练习</button>
+        </div>
+    </div>
+    {% else %}
+    <div class="card empty-state">
+        <div class="card-body text-center">
+            <p style="font-size:1.1rem;margin-bottom:8px;">📝 准备开始练习</p>
+            <button class="btn btn-primary mt-3"
+                    hx-get="/api/next-question?mode={{ mode }}&filter_type={{ filter_type }}&filter_value={{ filter_value }}"
+                    hx-target="#question-container" hx-swap="innerHTML">🎯 开始答题</button>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function switchFilterTab(tab) {
+    document.querySelectorAll('.filter-tab').forEach(function(el) {
+        el.style.background = 'transparent';
+        el.style.color = 'var(--color-text)';
+        el.style.borderColor = 'var(--color-border)';
+    });
+    var active = document.getElementById('tab-' + tab);
+    if (active) {
+        active.style.background = 'var(--color-primary)';
+        active.style.color = '#fff';
+        active.style.borderColor = 'var(--color-primary)';
+    }
+    document.getElementById('panel-assessment').style.display = tab === 'assessment' ? 'block' : 'none';
+    document.getElementById('panel-tag').style.display = tab === 'tag' ? 'block' : 'none';
+}
+</script>

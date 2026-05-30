@@ -1,0 +1,110 @@
+<div class="settings-page">
+    <!-- API Key Section -->
+    <div class="settings-section">
+        <h2>DeepSeek API Key</h2>
+        <form hx-post="/api/settings/apikey" hx-target="#apikey-result" hx-swap="innerHTML">
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label>API Key</label>
+                    <span class="setting-desc">用于统计中心的 AI 学习报告生成功能（可选）。<br>获取方式：<a href="https://platform.deepseek.com" target="_blank">platform.deepseek.com</a> 注册后在 API Keys 页面创建。</span>
+                </div>
+                <div class="setting-control">
+                    <input type="password" name="api_key" class="form-input" style="width:320px;"
+                        placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-outline"
+                        hx-post="/api/test-ai-connection" hx-target="#apikey-result" hx-swap="innerHTML">
+                        测试连接
+                    </button>
+                </div>
+            </div>
+            <div id="apikey-result"></div>
+        </form>
+    </div>
+
+    <!-- Preferences Section -->
+    <div class="settings-section">
+        <h2>学习偏好</h2>
+        <form hx-post="/api/settings/preferences" hx-target="#prefs-result" hx-swap="innerHTML">
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label>每日练习提醒</label>
+                    <span class="setting-desc">每天提醒完成练习任务</span>
+                </div>
+                <div class="setting-control">
+                    <label class="toggle">
+                        <input type="checkbox" name="daily_reminder" {{ 'checked' if daily_reminder == 'on' else '' }}>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <label>默认练习模式</label>
+                    <span class="setting-desc">打开练习页面时的默认模式</span>
+                </div>
+                <div class="setting-control">
+                    <select name="default_mode" class="form-select" style="width:160px;">
+                        <option value="daily" {{ 'selected' if default_mode == 'daily' else '' }}>每日练习</option>
+                        <option value="category" {{ 'selected' if default_mode == 'category' else '' }}>分类练习</option>
+                        <option value="review" {{ 'selected' if default_mode == 'review' else '' }}>复习模式</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">保存偏好</button>
+                </div>
+            </div>
+            <div id="prefs-result"></div>
+        </form>
+    </div>
+
+    <!-- Data Management Section -->
+    <div class="settings-section">
+        <h2>数据管理</h2>
+        <div class="setting-row">
+            <div class="setting-info">
+                <label>导出数据库</label>
+                <span class="setting-desc">下载完整的 SQLite 数据库文件作为备份</span>
+            </div>
+            <div class="setting-control">
+                <a href="/api/export-db" class="btn btn-outline">导出数据库</a>
+            </div>
+        </div>
+        <div class="setting-row">
+            <div class="setting-info">
+                <label>导入数据库</label>
+                <span class="setting-desc" style="color:#ef4444;">上传 .db 文件覆盖当前数据库（会自动备份旧数据）</span>
+            </div>
+            <div class="setting-control">
+                <form hx-post="/api/import-db" hx-encoding="multipart/form-data"
+                    hx-target="#data-result" hx-swap="innerHTML">
+                    <input type="file" name="db_file" accept=".db" id="db-import-file" style="display:none;"
+                        onchange="if(confirm('导入将覆盖当前所有数据，确定继续？'))this.form.requestSubmit()">
+                    <button type="button" class="btn btn-outline btn-danger"
+                        onclick="document.getElementById('db-import-file').click()">导入数据库</button>
+                </form>
+            </div>
+        </div>
+        <div class="setting-row">
+            <div class="setting-info">
+                <label>重置记录</label>
+                <span class="setting-desc">清空所有答题记录和 SM-2 间隔重复状态</span>
+            </div>
+            <div class="setting-control">
+                <button class="btn btn-outline btn-danger"
+                    hx-post="/api/reset-records" hx-target="#data-result" hx-swap="innerHTML"
+                    hx-confirm="确定要重置所有答题记录和 SM-2 状态吗？">重置记录</button>
+            </div>
+        </div>
+        <div class="setting-row">
+            <div class="setting-info">
+                <label>重置题库</label>
+                <span class="setting-desc">删除所有题目并重新导入种子数据</span>
+            </div>
+            <div class="setting-control">
+                <button class="btn btn-outline btn-danger"
+                    hx-post="/api/reset-all" hx-target="#data-result" hx-swap="innerHTML"
+                    hx-confirm="确定要删除所有题目并重新导入种子数据吗？">重置题库</button>
+            </div>
+        </div>
+        <div id="data-result"></div>
+    </div>
+</div>

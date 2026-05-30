@@ -1,0 +1,121 @@
+<!-- Answer result view shown after submitting an answer -->
+<div class="card answer-result-card {{ 'result-correct' if is_correct else 'result-wrong' }}">
+
+    <!-- Original Question (reviewable) -->
+    <div class="question-review" style="margin-bottom:16px;padding:14px 16px;background:var(--color-bg);border-radius:8px;border:1px solid var(--color-border);">
+        <div class="question-review-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;cursor:pointer;user-select:none;"
+             onclick="var b=this.nextElementSibling;b.style.display=b.style.display==='none'?'block':'none';this.querySelector('.toggle-arrow').textContent=b.style.display==='none'?'▶':'▼';">
+            <span style="font-weight:600;font-size:.9rem;color:var(--color-text);">
+                📋 回顾题目
+                {% if question %}
+                <span style="font-weight:400;color:var(--color-text-muted);margin-left:8px;">
+                    {{ question.category }} · {{ '选择' if question.type=='choice' else '简答' }} · {{ question.difficulty }}
+                </span>
+                {% endif %}
+            </span>
+            <span class="toggle-arrow" style="font-size:.8rem;color:var(--color-text-muted);">{{ '▼' if not is_correct else '▶' }}</span>
+        </div>
+        <div class="question-review-body" style="display:{{ 'block' if not is_correct else 'none' }};">
+            {% if question %}
+            <div style="white-space:pre-wrap;font-size:.95rem;line-height:1.7;margin-bottom:10px;">{{ question.content }}</div>
+            {% if question.type == 'choice' and question.options %}
+            <div style="display:flex;flex-direction:column;gap:4px;font-size:.9rem;">
+                {% set labels = 'ABCDEFGH' %}
+                {% for opt in question.options %}
+                {% set is_user_pick = user_answer and user_answer.strip() == labels[loop.index0] %}
+                {% set is_correct_opt = labels[loop.index0] == question.answer.strip() %}
+                <div style="padding:6px 10px;border-radius:4px;{{ 'background:#d1fae5;font-weight:600;' if is_correct_opt else '' }}{{ 'background:#fee2e2;' if is_user_pick and not is_correct_opt else '' }}">
+                    <strong>{{ labels[loop.index0] }}.</strong> {{ opt }}
+                    {% if is_correct_opt %}<span style="color:#065f46;"> ✓ 正确答案</span>{% endif %}
+                    {% if is_user_pick and not is_correct_opt %}<span style="color:#991b1b;"> ✗ 你的选择</span>{% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-badge" style="font-size:1.15rem;font-weight:700;margin-bottom:12px;">
+        {% if is_correct %}
+        ✅ 回答正确！
+        {% else %}
+        ❌ 回答错误
+        {% endif %}
+    </div>
+
+    <!-- Match Details -->
+    {% if not is_correct and match_details %}
+    <div class="match-details" style="background:var(--color-bg);padding:12px;border-radius:6px;margin-bottom:14px;">
+        {% if question and question.type == 'choice' %}
+        <p style="margin-bottom:4px;">你选择了 <strong style="color:#991b1b;">{{ user_answer }}</strong>，正确答案是 <strong style="color:#065f46;">{{ question.answer }}</strong></p>
+        {% endif %}
+        {% if match_details.get('missing_keywords') %}
+        <p style="margin-bottom:4px;">
+            <strong>缺失关键词：</strong>
+            {% for kw in match_details.missing_keywords %}
+            <span class="missing-keyword">{{ kw }}</span>
+            {% endfor %}
+        </p>
+        {% endif %}
+        {% if match_details.get('user_normalized') %}
+        <p style="margin-bottom:4px;font-size:.85rem;"><strong>你的答案（标准化后）：</strong><code>{{ match_details.user_normalized }}</code></p>
+        {% endif %}
+        {% if match_details.get('expected_normalized') %}
+        <p style="margin-bottom:4px;font-size:.85rem;"><strong>标准答案（标准化后）：</strong><code>{{ match_details.expected_normalized }}</code></p>
+        {% endif %}
+        <p style="font-size:.8rem;color:var(--color-text-muted);">核对模式：{{ match_details.get('mode', '') }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Standard Answer -->
+    <div class="correct-answer" style="margin-bottom:12px;padding:10px 14px;background:#d1fae5;border-radius:6px;color:#065f46;">
+        <strong>标准答案：</strong>{{ answer }}
+    </div>
+
+    <!-- Explanation -->
+    {% if explanation %}
+    <div class="explanation" style="margin-bottom:16px;padding:10px 14px;background:var(--color-primary-bg);border-radius:6px;">
+        <strong>📖 解析：</strong>{{ explanation }}
+    </div>
+    {% endif %}
+
+    <!-- Consolidation Practice (only when wrong) -->
+    {% if not is_correct %}
+    <div class="consolidation-section" style="border-top:1px solid var(--color-border);padding-top:14px;margin-top:14px;">
+        <div hx-get="/api/related-questions/{{ question_id }}?qtype={{ question_type }}&count=4"
+             hx-trigger="load" hx-swap="innerHTML">
+            <p class="text-muted" style="font-size:.85rem;">🔍 查找相关题目中...</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Self Assessment -->
+    <div class="self-assessment" style="border-top:1px solid var(--color-border);padding-top:14px;">
+        <p style="margin-bottom:10px;font-weight:600;">📊 请自评掌握程度：</p>
+        <div class="assessment-btns" style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-success btn-sm"
+                    hx-post="/api/submit-answer"
+                    hx-vals='{"question_id":"{{ question_id }}","question_type":"{{ question_type }}","self_assessment":"mastered","mode":"{{ mode }}","filter_type":"{{ filter_type }}","filter_value":"{{ filter_value }}"}'
+                    hx-target="#question-container"
+                    hx-swap="innerHTML">
+                ✅ 完全掌握
+            </button>
+            <button class="btn btn-warning btn-sm"
+                    hx-post="/api/submit-answer"
+                    hx-vals='{"question_id":"{{ question_id }}","question_type":"{{ question_type }}","self_assessment":"fuzzy","mode":"{{ mode }}","filter_type":"{{ filter_type }}","filter_value":"{{ filter_value }}"}'
+                    hx-target="#question-container"
+                    hx-swap="innerHTML">
+                🤔 有点模糊
+            </button>
+            <button class="btn btn-danger btn-sm"
+                    hx-post="/api/submit-answer"
+                    hx-vals='{"question_id":"{{ question_id }}","question_type":"{{ question_type }}","self_assessment":"failed","mode":"{{ mode }}","filter_type":"{{ filter_type }}","filter_value":"{{ filter_value }}"}'
+                    hx-target="#question-container"
+                    hx-swap="innerHTML">
+                ❌ 完全不会
+            </button>
+        </div>
+    </div>
+</div>

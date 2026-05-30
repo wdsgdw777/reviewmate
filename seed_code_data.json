@@ -1,0 +1,1413 @@
+[
+  {
+    "title": "数字反转",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "数学"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取一个正整数 n，将其各位数字反转后输出。\n\n例如：输入 12345，反转后为 54321。\n\n示例输入：\n12345\n\n示例输出：\n54321",
+    "template_code": "def reverse_number(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(reverse_number(n))",
+    "test_cases": [
+      {
+        "input": "12345",
+        "expected_output": "54321"
+      },
+      {
+        "input": "1000",
+        "expected_output": "1"
+      },
+      {
+        "input": "7",
+        "expected_output": "7"
+      },
+      {
+        "input": "12030",
+        "expected_output": "3021"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def reverse_number(n):\n    result = 0\n    while n > 0:\n        result = result * 10 + n % 10\n        n //= 10\n    return result\n\nif __name__ == '__main__':\n    n = int(input())\n    print(reverse_number(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "水仙花数判断",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "数学"
+    ],
+    "difficulty": "medium",
+    "description": "水仙花数是指一个三位数，其各位数字的立方和等于该数本身。例如 153 = 1^3 + 5^3 + 3^3。\n\n编写程序，读取一个三位数 n，如果是水仙花数输出 YES，否则输出 NO。\n\n示例输入：\n153\n\n示例输出：\nYES",
+    "template_code": "def is_narcissistic(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(is_narcissistic(n))",
+    "test_cases": [
+      {
+        "input": "153",
+        "expected_output": "YES"
+      },
+      {
+        "input": "370",
+        "expected_output": "YES"
+      },
+      {
+        "input": "100",
+        "expected_output": "NO"
+      },
+      {
+        "input": "407",
+        "expected_output": "YES"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def is_narcissistic(n):\n    a = n // 100\n    b = (n // 10) % 10\n    c = n % 10\n    if a*a*a + b*b*b + c*c*c == n:\n        return 'YES'\n    return 'NO'\n\nif __name__ == '__main__':\n    n = int(input())\n    print(is_narcissistic(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "统计单词个数",
+    "category": "Python",
+    "tags": [
+      "字符串",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取一行英文句子，统计其中单词的数量（单词以空格分隔）。\n\n示例输入：\nHello World Python\n\n示例输出：\n3",
+    "template_code": "def count_words(s):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    s = input().strip()\n    print(count_words(s))",
+    "test_cases": [
+      {
+        "input": "Hello World Python",
+        "expected_output": "3"
+      },
+      {
+        "input": "Hello",
+        "expected_output": "1"
+      },
+      {
+        "input": "",
+        "expected_output": "0"
+      },
+      {
+        "input": "  a   b  c   ",
+        "expected_output": "3"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def count_words(s):\n    if not s:\n        return 0\n    return len(s.split())\n\nif __name__ == '__main__':\n    s = input().strip()\n    print(count_words(s))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "判断回文串",
+    "category": "Python",
+    "tags": [
+      "字符串",
+      "条件判断"
+    ],
+    "difficulty": "easy",
+    "description": "回文串是指正读和反读都一样的字符串（忽略大小写）。\n\n编写程序判断一个字符串是否为回文串，是则输出 YES，否则输出 NO。\n\n示例输入：\nLevel\n\n示例输出：\nYES",
+    "template_code": "def is_palindrome(s):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    s = input().strip()\n    print(is_palindrome(s))",
+    "test_cases": [
+      {
+        "input": "Level",
+        "expected_output": "YES"
+      },
+      {
+        "input": "Python",
+        "expected_output": "NO"
+      },
+      {
+        "input": "A",
+        "expected_output": "YES"
+      },
+      {
+        "input": "Madam",
+        "expected_output": "YES"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def is_palindrome(s):\n    s = s.lower()\n    if s == s[::-1]:\n        return 'YES'\n    return 'NO'\n\nif __name__ == '__main__':\n    s = input().strip()\n    print(is_palindrome(s))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "找出完数",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "数学"
+    ],
+    "difficulty": "medium",
+    "description": "完数是指一个数恰好等于它的所有真因子（除了自身以外的约数）之和。例如 6 = 1+2+3。\n\n编写程序，读取一个正整数 n，判断它是否为完数，是则输出 YES，否则输出 NO。\n\n示例输入：\n6\n\n示例输出：\nYES",
+    "template_code": "def is_perfect(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(is_perfect(n))",
+    "test_cases": [
+      {
+        "input": "6",
+        "expected_output": "YES"
+      },
+      {
+        "input": "28",
+        "expected_output": "YES"
+      },
+      {
+        "input": "10",
+        "expected_output": "NO"
+      },
+      {
+        "input": "1",
+        "expected_output": "NO"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def is_perfect(n):\n    if n < 2:\n        return 'NO'\n    total = 1\n    for i in range(2, int(n**0.5)+1):\n        if n % i == 0:\n            total += i\n            if i != n // i:\n                total += n // i\n    return 'YES' if total == n else 'NO'\n\nif __name__ == '__main__':\n    n = int(input())\n    print(is_perfect(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "FizzBuzz 问题",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "easy",
+    "description": "经典的 FizzBuzz 问题：遍历 1 到 n，\n- 如果数字是 3 的倍数（但不是 5 的倍数），添加到结果列表 'Fizz'\n- 如果是 5 的倍数（但不是 3 的倍数），添加 'Buzz'\n- 如果既是 3 又是 5 的倍数，添加 'FizzBuzz'\n- 否则添加数字本身\n\n返回结果列表，元素间用空格分隔。\n\n示例输入：\n5\n\n示例输出：\n1 2 Fizz 4 Buzz",
+    "template_code": "def fizzbuzz(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(fizzbuzz(n))",
+    "test_cases": [
+      {
+        "input": "5",
+        "expected_output": "1 2 Fizz 4 Buzz"
+      },
+      {
+        "input": "15",
+        "expected_output": "1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz"
+      },
+      {
+        "input": "3",
+        "expected_output": "1 2 Fizz"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def fizzbuzz(n):\n    result = []\n    for i in range(1, n+1):\n        if i % 3 == 0 and i % 5 == 0:\n            result.append('FizzBuzz')\n        elif i % 3 == 0:\n            result.append('Fizz')\n        elif i % 5 == 0:\n            result.append('Buzz')\n        else:\n            result.append(str(i))\n    return ' '.join(result)\n\nif __name__ == '__main__':\n    n = int(input())\n    print(fizzbuzz(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "数字反转",
+    "category": "C",
+    "tags": [
+      "循环",
+      "基础"
+    ],
+    "difficulty": "medium",
+    "description": "编写 C 程序，读取一个正整数 n，将其各位数字反转后输出。\n\n示例输入：\n12345\n\n示例输出：\n54321",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "12345",
+        "expected_output": "54321"
+      },
+      {
+        "input": "1000",
+        "expected_output": "1"
+      },
+      {
+        "input": "7",
+        "expected_output": "7"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, result = 0;\n    scanf(\"%d\", &n);\n    while (n > 0) {\n        result = result * 10 + n % 10;\n        n /= 10;\n    }\n    printf(\"%d\\n\", result);\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "最大公约数",
+    "category": "C",
+    "tags": [
+      "循环",
+      "数学"
+    ],
+    "difficulty": "medium",
+    "description": "编写 C 程序，读取两个正整数 a 和 b，使用辗转相除法（欧几里得算法）求它们的最大公约数（GCD）。\n\n示例输入：\n12 18\n\n示例输出：\n6",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int a, b;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "12 18",
+        "expected_output": "6"
+      },
+      {
+        "input": "17 19",
+        "expected_output": "1"
+      },
+      {
+        "input": "100 25",
+        "expected_output": "25"
+      },
+      {
+        "input": "0 5",
+        "expected_output": "5"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int a, b, temp;\n    scanf(\"%d %d\", &a, &b);\n    while (b != 0) {\n        temp = a % b;\n        a = b;\n        b = temp;\n    }\n    printf(\"%d\\n\", a);\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "九九乘法表",
+    "category": "C",
+    "tags": [
+      "循环",
+      "输出"
+    ],
+    "difficulty": "easy",
+    "description": "编写 C 程序，输出九九乘法表的下三角部分（i×j，其中 i 从 1 到 9，j 从 1 到 i）。\n注意格式：每个算式占一行，格式为 \"i*j=结果\"。\n\n示例输出（前 3 行）：\n1*1=1\n2*1=2\n2*2=4",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "",
+        "expected_output": "1*1=1\n2*1=2\n2*2=4\n3*1=3\n3*2=6\n3*3=9\n4*1=4\n4*2=8\n4*3=12\n4*4=16\n5*1=5\n5*2=10\n5*3=15\n5*4=20\n5*5=25\n6*1=6\n6*2=12\n6*3=18\n6*4=24\n6*5=30\n6*6=36\n7*1=7\n7*2=14\n7*3=21\n7*4=28\n7*5=35\n7*6=42\n7*7=49\n8*1=8\n8*2=16\n8*3=24\n8*4=32\n8*5=40\n8*6=48\n8*7=56\n8*8=64\n9*1=9\n9*2=18\n9*3=27\n9*4=36\n9*5=45\n9*6=54\n9*7=63\n9*8=72\n9*9=81"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    for (int i = 1; i <= 9; i++) {\n        for (int j = 1; j <= i; j++) {\n            printf(\"%d*%d=%d\\n\", i, j, i*j);\n        }\n    }\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "统计正负数个数",
+    "category": "C",
+    "tags": [
+      "数组",
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "medium",
+    "description": "编写 C 程序，先读取整数 n 表示数组长度，然后读取 n 个整数，统计其中正数、负数和零的个数，按顺序输出。\n\n示例输入：\n5\n-1 0 3 -5 2\n\n示例输出：\n2 1 2\n（表示正数 2 个，零 1 个，负数 2 个）",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "5\n-1 0 3 -5 2",
+        "expected_output": "2 1 2"
+      },
+      {
+        "input": "3\n1 2 3",
+        "expected_output": "3 0 0"
+      },
+      {
+        "input": "4\n-1 -2 -3 -4",
+        "expected_output": "0 0 4"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, x, pos = 0, zero = 0, neg = 0;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (x > 0) pos++;\n        else if (x == 0) zero++;\n        else neg++;\n    }\n    printf(\"%d %d %d\\n\", pos, zero, neg);\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "求阶乘",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "数学"
+    ],
+    "difficulty": "easy",
+    "description": "编写程序，读取一个正整数 n，计算 n! = 1×2×...×n。\n\n示例输入：\n5\n\n示例输出：\n120",
+    "template_code": "def factorial(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(factorial(n))",
+    "test_cases": [
+      {
+        "input": "5",
+        "expected_output": "120"
+      },
+      {
+        "input": "1",
+        "expected_output": "1"
+      },
+      {
+        "input": "0",
+        "expected_output": "1"
+      },
+      {
+        "input": "7",
+        "expected_output": "5040"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def factorial(n):\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result\n\nif __name__ == '__main__':\n    n = int(input())\n    print(factorial(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "判断素数",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "数学",
+      "条件判断"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取一个正整数 n，判断它是否为素数（质数）。\n是素数输出 YES，否则输出 NO。\n\n素数定义：大于 1 的自然数，且只能被 1 和自身整除。\n\n示例输入：\n7\n\n示例输出：\nYES",
+    "template_code": "def is_prime(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(is_prime(n))",
+    "test_cases": [
+      {
+        "input": "7",
+        "expected_output": "YES"
+      },
+      {
+        "input": "10",
+        "expected_output": "NO"
+      },
+      {
+        "input": "2",
+        "expected_output": "YES"
+      },
+      {
+        "input": "1",
+        "expected_output": "NO"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def is_prime(n):\n    if n < 2:\n        return 'NO'\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0:\n            return 'NO'\n    return 'YES'\n\nif __name__ == '__main__':\n    n = int(input())\n    print(is_prime(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "斐波那契数列",
+    "category": "Python",
+    "tags": [
+      "循环",
+      "数学"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取一个整数 n（n>=1），输出斐波那契数列的第 n 项。\n\n斐波那契数列：F(1)=1, F(2)=1, F(n)=F(n-1)+F(n-2)\n\n示例输入：\n6\n\n示例输出：\n8\n\n（数列：1,1,2,3,5,8,... 第6项为8）",
+    "template_code": "def fibonacci(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    print(fibonacci(n))",
+    "test_cases": [
+      {
+        "input": "6",
+        "expected_output": "8"
+      },
+      {
+        "input": "1",
+        "expected_output": "1"
+      },
+      {
+        "input": "2",
+        "expected_output": "1"
+      },
+      {
+        "input": "10",
+        "expected_output": "55"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def fibonacci(n):\n    if n <= 2:\n        return 1\n    a, b = 1, 1\n    for _ in range(3, n + 1):\n        a, b = b, a + b\n    return b\n\nif __name__ == '__main__':\n    n = int(input())\n    print(fibonacci(n))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "统计字符类型",
+    "category": "Python",
+    "tags": [
+      "字符串",
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取一行字符串，统计其中大写字母、小写字母、数字和空格的数量，按顺序输出（空格分隔）。\n\n示例输入：\nHello World 123\n\n示例输出：\n2 8 3 2\n\n（大写2个 H,W / 小写8个 e,l,l,o,o,r,l,d / 数字3个 1,2,3 / 空格2个）",
+    "template_code": "def count_chars(s):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    s = input()\n    result = count_chars(s)\n    print(' '.join(map(str, result)))",
+    "test_cases": [
+      {
+        "input": "Hello World 123",
+        "expected_output": "2 8 3 2"
+      },
+      {
+        "input": "ABCabc123",
+        "expected_output": "3 3 3 0"
+      },
+      {
+        "input": "   ",
+        "expected_output": "0 0 0 3"
+      },
+      {
+        "input": "Python3",
+        "expected_output": "1 5 1 0"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def count_chars(s):\n    upper = sum(1 for c in s if c.isupper())\n    lower = sum(1 for c in s if c.islower())\n    digit = sum(1 for c in s if c.isdigit())\n    space = sum(1 for c in s if c.isspace())\n    return [upper, lower, digit, space]\n\nif __name__ == '__main__':\n    s = input()\n    result = count_chars(s)\n    print(' '.join(map(str, result)))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "列表去重",
+    "category": "Python",
+    "tags": [
+      "列表",
+      "循环"
+    ],
+    "difficulty": "easy",
+    "description": "编写程序，先读取一个整数 n 表示数组长度，然后读取 n 个整数。输出去重后排序的列表，元素间用空格分隔。\n\n示例输入：\n5\n3 1 2 3 2\n\n示例输出：\n1 2 3",
+    "template_code": "def dedup_sort(arr):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    arr = list(map(int, input().split()))\n    result = dedup_sort(arr)\n    print(' '.join(map(str, result)))",
+    "test_cases": [
+      {
+        "input": "5\n3 1 2 3 2",
+        "expected_output": "1 2 3"
+      },
+      {
+        "input": "3\n1 1 1",
+        "expected_output": "1"
+      },
+      {
+        "input": "4\n4 3 2 1",
+        "expected_output": "1 2 3 4"
+      },
+      {
+        "input": "1\n100",
+        "expected_output": "100"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def dedup_sort(arr):\n    return sorted(set(arr))\n\nif __name__ == '__main__':\n    n = int(input())\n    arr = list(map(int, input().split()))\n    result = dedup_sort(arr)\n    print(' '.join(map(str, result)))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "找出最大值和次大值",
+    "category": "Python",
+    "tags": [
+      "列表",
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取 n 个互不相同的整数（n>=2），输出其中的最大值和次大值，空格分隔。\n\n提示：不要使用排序，遍历一次找出。\n\n示例输入：\n5\n3 8 1 9 5\n\n示例输出：\n9 8",
+    "template_code": "def max_two(arr):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    arr = list(map(int, input().split()))\n    first, second = max_two(arr)\n    print(first, second)",
+    "test_cases": [
+      {
+        "input": "5\n3 8 1 9 5",
+        "expected_output": "9 8"
+      },
+      {
+        "input": "2\n5 3",
+        "expected_output": "5 3"
+      },
+      {
+        "input": "4\n1 2 3 4",
+        "expected_output": "4 3"
+      },
+      {
+        "input": "3\n10 20 30",
+        "expected_output": "30 20"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def max_two(arr):\n    first = second = float('-inf')\n    for x in arr:\n        if x > first:\n            second = first\n            first = x\n        elif x > second:\n            second = x\n    return first, second\n\nif __name__ == '__main__':\n    n = int(input())\n    arr = list(map(int, input().split()))\n    first, second = max_two(arr)\n    print(first, second)",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "杨辉三角",
+    "category": "Python",
+    "tags": [
+      "列表",
+      "循环",
+      "数学"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取整数 n，输出杨辉三角的前 n 行。每行数字用空格分隔。\n\n杨辉三角：每行第一个和最后一个数为 1，其余每个数等于它上方两个数之和。\n\n示例输入：\n4\n\n示例输出：\n1\n1 1\n1 2 1\n1 3 3 1",
+    "template_code": "def yanghui(n):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n = int(input())\n    rows = yanghui(n)\n    for row in rows:\n        print(' '.join(map(str, row)))",
+    "test_cases": [
+      {
+        "input": "4",
+        "expected_output": "1\n1 1\n1 2 1\n1 3 3 1"
+      },
+      {
+        "input": "1",
+        "expected_output": "1"
+      },
+      {
+        "input": "5",
+        "expected_output": "1\n1 1\n1 2 1\n1 3 3 1\n1 4 6 4 1"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def yanghui(n):\n    result = []\n    for i in range(n):\n        row = [1] * (i + 1)\n        for j in range(1, i):\n            row[j] = result[i-1][j-1] + result[i-1][j]\n        result.append(row)\n    return result\n\nif __name__ == '__main__':\n    n = int(input())\n    rows = yanghui(n)\n    for row in rows:\n        print(' '.join(map(str, row)))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "凯撒密码加密",
+    "category": "Python",
+    "tags": [
+      "字符串",
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取一个只包含大写字母的字符串和偏移量 k，输出凯撒加密后的字符串。\n\n凯撒密码：每个字母向后移动 k 位（Z 之后回到 A）。\n\n示例输入：\nHELLO 3\n\n示例输出：\nKHOOR\n\n（H->K, E->H, L->O, L->O, O->R）",
+    "template_code": "def caesar(s, k):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    s, k = input().split()\n    k = int(k)\n    print(caesar(s, k))",
+    "test_cases": [
+      {
+        "input": "HELLO 3",
+        "expected_output": "KHOOR"
+      },
+      {
+        "input": "ABC 1",
+        "expected_output": "BCD"
+      },
+      {
+        "input": "XYZ 2",
+        "expected_output": "ZAB"
+      },
+      {
+        "input": "ZZZ 1",
+        "expected_output": "AAA"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def caesar(s, k):\n    result = []\n    for c in s:\n        new_char = chr((ord(c) - ord('A') + k) % 26 + ord('A'))\n        result.append(new_char)\n    return ''.join(result)\n\nif __name__ == '__main__':\n    s, k = input().split()\n    k = int(k)\n    print(caesar(s, k))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "矩阵转置",
+    "category": "Python",
+    "tags": [
+      "列表",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "编写程序，读取 n 行 m 列的矩阵，输出它的转置矩阵（m 行 n 列）。\n\n输入格式：第一行两个整数 n m，接下来 n 行每行 m 个整数。\n\n示例输入：\n2 3\n1 2 3\n4 5 6\n\n示例输出：\n1 4\n2 5\n3 6",
+    "template_code": "def transpose(matrix):\n    # 在此编写你的代码\n    pass\n\nif __name__ == '__main__':\n    n, m = map(int, input().split())\n    matrix = []\n    for _ in range(n):\n        row = list(map(int, input().split()))\n        matrix.append(row)\n    result = transpose(matrix)\n    for row in result:\n        print(' '.join(map(str, row)))",
+    "test_cases": [
+      {
+        "input": "2 3\n1 2 3\n4 5 6",
+        "expected_output": "1 4\n2 5\n3 6"
+      },
+      {
+        "input": "1 3\n1 2 3",
+        "expected_output": "1\n2\n3"
+      },
+      {
+        "input": "3 3\n1 0 0\n0 1 0\n0 0 1",
+        "expected_output": "1 0 0\n0 1 0\n0 0 1"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "def transpose(matrix):\n    n = len(matrix)\n    m = len(matrix[0])\n    return [[matrix[i][j] for i in range(n)] for j in range(m)]\n\nif __name__ == '__main__':\n    n, m = map(int, input().split())\n    matrix = []\n    for _ in range(n):\n        row = list(map(int, input().split()))\n        matrix.append(row)\n    result = transpose(matrix)\n    for row in result:\n        print(' '.join(map(str, row)))",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "判断闰年",
+    "category": "C",
+    "tags": [
+      "条件判断",
+      "数学"
+    ],
+    "difficulty": "easy",
+    "description": "编写 C 程序，读取一个年份，判断是否为闰年。是闰年输出 YES，否则输出 NO。\n\n闰年规则：(1)能被4整除但不能被100整除 或 (2)能被400整除。\n\n示例输入：\n2000\n\n示例输出：\nYES",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int year;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "2000",
+        "expected_output": "YES"
+      },
+      {
+        "input": "1900",
+        "expected_output": "NO"
+      },
+      {
+        "input": "2020",
+        "expected_output": "YES"
+      },
+      {
+        "input": "2021",
+        "expected_output": "NO"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int year;\n    scanf(\"%d\", &year);\n    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)\n        printf(\"YES\\n\");\n    else\n        printf(\"NO\\n\");\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "冒泡排序",
+    "category": "C",
+    "tags": [
+      "数组",
+      "循环",
+      "排序"
+    ],
+    "difficulty": "medium",
+    "description": "编写 C 程序，先读取 n，再读取 n 个整数，用冒泡排序从小到大排序后输出（空格分隔）。\n\n示例输入：\n5\n3 1 4 2 5\n\n示例输出：\n1 2 3 4 5",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "5\n3 1 4 2 5",
+        "expected_output": "1 2 3 4 5"
+      },
+      {
+        "input": "3\n1 2 3",
+        "expected_output": "1 2 3"
+      },
+      {
+        "input": "4\n9 8 7 6",
+        "expected_output": "6 7 8 9"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, arr[100], temp;\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    for (int i = 0; i < n - 1; i++) {\n        for (int j = 0; j < n - 1 - i; j++) {\n            if (arr[j] > arr[j + 1]) {\n                temp = arr[j];\n                arr[j] = arr[j + 1];\n                arr[j + 1] = temp;\n            }\n        }\n    }\n    for (int i = 0; i < n; i++) {\n        if (i > 0) printf(\" \");\n        printf(\"%d\", arr[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "数组逆序",
+    "category": "C",
+    "tags": [
+      "数组",
+      "循环"
+    ],
+    "difficulty": "easy",
+    "description": "编写 C 程序，先读取 n，再读取 n 个整数，逆序输出这 n 个数（空格分隔）。\n\n示例输入：\n5\n1 2 3 4 5\n\n示例输出：\n5 4 3 2 1",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "5\n1 2 3 4 5",
+        "expected_output": "5 4 3 2 1"
+      },
+      {
+        "input": "1\n100",
+        "expected_output": "100"
+      },
+      {
+        "input": "4\n9 8 7 6",
+        "expected_output": "6 7 8 9"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, arr[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    for (int i = n - 1; i >= 0; i--) {\n        if (i < n - 1) printf(\" \");\n        printf(\"%d\", arr[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "查找最值",
+    "category": "C",
+    "tags": [
+      "数组",
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "medium",
+    "description": "编写 C 程序，先读取 n，再读取 n 个整数，输出其中的最大值和最小值（空格分隔）。\n\n示例输入：\n5\n3 8 1 9 5\n\n示例输出：\n9 1",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "5\n3 8 1 9 5",
+        "expected_output": "9 1"
+      },
+      {
+        "input": "3\n5 5 5",
+        "expected_output": "5 5"
+      },
+      {
+        "input": "4\n-1 -5 0 3",
+        "expected_output": "3 -5"
+      }
+    ],
+    "time_limit_ms": 1000,
+    "memory_limit_mb": 128,
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, x, max, min;\n    scanf(\"%d\", &n);\n    scanf(\"%d\", &x);\n    max = min = x;\n    for (int i = 1; i < n; i++) {\n        scanf(\"%d\", &x);\n        if (x > max) max = x;\n        if (x < min) min = x;\n    }\n    printf(\"%d %d\\n\", max, min);\n    return 0;\n}",
+    "source": "manual",
+    "input_format": "",
+    "output_format": "",
+    "sample_input": "",
+    "sample_output": "",
+    "stack_limit_mb": 64
+  },
+  {
+    "title": "括号匹配",
+    "category": "C",
+    "tags": [
+      "字符串",
+      "栈",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "给定一个字符串，字符串中包含除了空白符、换行符之外的任意字符。检测字符串中的圆括号是否配对，即 ( 与 ) 是否配对。",
+    "input_format": "一个长度不超过 100 的非空字符串，该字符串中不会出现空格、换行符。",
+    "output_format": "匹配输出 parentheses match!，不匹配输出 parentheses do not match!",
+    "sample_input": "((a+b)*(c+d))",
+    "sample_output": "parentheses match!",
+    "template_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[101];\n    scanf(\"%s\", s);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "((a+b)*(c+d))",
+        "expected_output": "parentheses match!"
+      },
+      {
+        "input": "((a+b)*)c+d))",
+        "expected_output": "parentheses do not match!"
+      },
+      {
+        "input": "()",
+        "expected_output": "parentheses match!"
+      },
+      {
+        "input": ")(",
+        "expected_output": "parentheses do not match!"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[101];\n    scanf(\"%s\", s);\n    int stack = 0, valid = 1;\n    for (int i = 0; s[i]; i++) {\n        if (s[i] == '(') stack++;\n        else if (s[i] == ')') {\n            if (stack == 0) { valid = 0; break; }\n            stack--;\n        }\n    }\n    if (stack != 0) valid = 0;\n    printf(valid ? \"parentheses match!\\n\" : \"parentheses do not match!\\n\");\n    return 0;\n}"
+  },
+  {
+    "title": "大小写转换",
+    "category": "C",
+    "tags": [
+      "字符串",
+      "条件判断",
+      "循环"
+    ],
+    "difficulty": "easy",
+    "description": "读取一行字符串（不超过 100 个字符），将其中的大写字母转换为小写字母，小写字母转换为大写字母，其他字符保持不变。",
+    "input_format": "一行字符串，长度不超过 100，可能包含大写字母、小写字母和其他字符。",
+    "output_format": "转换后的字符串。",
+    "sample_input": "Hello World!",
+    "sample_output": "hELLO wORLD!",
+    "template_code": "#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char ch;\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "Hello World!",
+        "expected_output": "hELLO wORLD!"
+      },
+      {
+        "input": "ABCabc",
+        "expected_output": "abcABC"
+      },
+      {
+        "input": "12345",
+        "expected_output": "12345"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n#include <ctype.h>\n\nint main() {\n    char ch;\n    while ((ch = getchar()) != '\\n' && ch != EOF) {\n        if (isupper(ch)) putchar(tolower(ch));\n        else if (islower(ch)) putchar(toupper(ch));\n        else putchar(ch);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+  },
+  {
+    "title": "求1到N的和",
+    "category": "C",
+    "tags": [
+      "循环",
+      "数学",
+      "基础"
+    ],
+    "difficulty": "easy",
+    "description": "读取一个正整数 N（1<=N<=10000），计算 1+2+...+N 的值并输出。",
+    "input_format": "一个正整数 N。",
+    "output_format": "一个整数，表示 1 到 N 的和。",
+    "sample_input": "100",
+    "sample_output": "5050",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "100",
+        "expected_output": "5050"
+      },
+      {
+        "input": "1",
+        "expected_output": "1"
+      },
+      {
+        "input": "1000",
+        "expected_output": "500500"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n;\n    scanf(\"%d\", &n);\n    printf(\"%d\\n\", n * (n + 1) / 2);\n    return 0;\n}"
+  },
+  {
+    "title": "字符串反转",
+    "category": "C",
+    "tags": [
+      "字符串",
+      "数组",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "读取一行字符串（不超过 100 个字符），将其反转后输出。",
+    "input_format": "一行字符串，长度不超过 100。",
+    "output_format": "反转后的字符串。",
+    "sample_input": "Hello",
+    "sample_output": "olleH",
+    "template_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[101];\n    scanf(\"%s\", s);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "Hello",
+        "expected_output": "olleH"
+      },
+      {
+        "input": "ABC",
+        "expected_output": "CBA"
+      },
+      {
+        "input": "1",
+        "expected_output": "1"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[101];\n    scanf(\"%s\", s);\n    int len = strlen(s);\n    for (int i = len - 1; i >= 0; i--)\n        putchar(s[i]);\n    printf(\"\\n\");\n    return 0;\n}"
+  },
+  {
+    "title": "计算字符频次",
+    "category": "C",
+    "tags": [
+      "字符串",
+      "数组",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "读取一行字符串（只包含小写字母），统计每个字母出现的次数，按 a 到 z 的顺序输出出现次数大于 0 的字母及次数。格式为 字母:次数，每行一个。",
+    "input_format": "一行字符串，只包含小写字母，长度不超过 100。",
+    "output_format": "每行输出一个字母及其出现次数，格式为 字母:次数，按字母表顺序。",
+    "sample_input": "hello",
+    "sample_output": "e:1\nh:1\nl:2\no:1",
+    "template_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[101];\n    int count[26] = {0};\n    scanf(\"%s\", s);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "hello",
+        "expected_output": "e:1\nh:1\nl:2\no:1"
+      },
+      {
+        "input": "abc",
+        "expected_output": "a:1\nb:1\nc:1"
+      },
+      {
+        "input": "aaa",
+        "expected_output": "a:3"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char s[101];\n    int count[26] = {0};\n    scanf(\"%s\", s);\n    for (int i = 0; s[i]; i++)\n        count[s[i] - 'a']++;\n    for (int i = 0; i < 26; i++)\n        if (count[i] > 0)\n            printf(\"%c:%d\\n\", i + 'a', count[i]);\n    return 0;\n}"
+  },
+  {
+    "title": "括号匹配",
+    "category": "Python",
+    "tags": [
+      "字符串",
+      "栈",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "给定一个字符串，检测字符串中的圆括号是否配对，即 ( 与 ) 是否配对。",
+    "input_format": "一个长度不超过 100 的非空字符串，该字符串中不会出现空格、换行符。",
+    "output_format": "匹配输出 parentheses match!，不匹配输出 parentheses do not match!",
+    "sample_input": "((a+b)*(c+d))",
+    "sample_output": "parentheses match!",
+    "template_code": "def check_parentheses(s):\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    s = input().strip()\n    print(check_parentheses(s))",
+    "test_cases": [
+      {
+        "input": "((a+b)*(c+d))",
+        "expected_output": "parentheses match!"
+      },
+      {
+        "input": "((a+b)*)c+d))",
+        "expected_output": "parentheses do not match!"
+      },
+      {
+        "input": "()",
+        "expected_output": "parentheses match!"
+      },
+      {
+        "input": ")(",
+        "expected_output": "parentheses do not match!"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def check_parentheses(s):\n    stack = 0\n    for ch in s:\n        if ch == \"(\":\n            stack += 1\n        elif ch == \")\":\n            if stack == 0:\n                return \"parentheses do not match!\"\n            stack -= 1\n    return \"parentheses match!\" if stack == 0 else \"parentheses do not match!\"\n\nif __name__ == \"__main__\":\n    s = input().strip()\n    print(check_parentheses(s))"
+  },
+  {
+    "title": "两数之和",
+    "category": "Python",
+    "tags": [
+      "列表",
+      "循环",
+      "条件判断"
+    ],
+    "difficulty": "easy",
+    "description": "读取一个整数数组和目标值 target，在数组中找到两个数使它们的和等于 target，输出这两个数的下标（从 0 开始），空格分隔。假设只有唯一解，且同一个元素不能重复使用。",
+    "input_format": "第一行输入数组元素个数 n 和 target，空格分隔。第二行为 n 个整数，空格分隔。",
+    "output_format": "两个下标，空格分隔。",
+    "sample_input": "4 9\n2 7 11 15",
+    "sample_output": "0 1",
+    "template_code": "def two_sum(nums, target):\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    n, target = map(int, input().split())\n    nums = list(map(int, input().split()))\n    i, j = two_sum(nums, target)\n    print(i, j)",
+    "test_cases": [
+      {
+        "input": "4 9\n2 7 11 15",
+        "expected_output": "0 1"
+      },
+      {
+        "input": "3 6\n3 2 4",
+        "expected_output": "1 2"
+      },
+      {
+        "input": "2 6\n3 3",
+        "expected_output": "0 1"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def two_sum(nums, target):\n    seen = {}\n    for i, x in enumerate(nums):\n        diff = target - x\n        if diff in seen:\n            return seen[diff], i\n        seen[x] = i\n    return -1, -1\n\nif __name__ == \"__main__\":\n    n, target = map(int, input().split())\n    nums = list(map(int, input().split()))\n    i, j = two_sum(nums, target)\n    print(i, j)"
+  },
+  {
+    "title": "字符串压缩",
+    "category": "Python",
+    "tags": [
+      "字符串",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "实现一个简单的字符串压缩算法：对于连续重复的字符，用 字符+重复次数 表示。如果压缩后的字符串不比原字符串短，则输出原字符串。",
+    "input_format": "一行字符串，长度不超过 100。",
+    "output_format": "压缩后的字符串或原字符串。",
+    "sample_input": "aabcccccaaa",
+    "sample_output": "a2b1c5a3",
+    "template_code": "def compress(s):\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    s = input().strip()\n    print(compress(s))",
+    "test_cases": [
+      {
+        "input": "aabcccccaaa",
+        "expected_output": "a2b1c5a3"
+      },
+      {
+        "input": "abcd",
+        "expected_output": "abcd"
+      },
+      {
+        "input": "aa",
+        "expected_output": "aa"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def compress(s):\n    if not s:\n        return s\n    result = []\n    count = 1\n    for i in range(1, len(s)):\n        if s[i] == s[i-1]:\n            count += 1\n        else:\n            result.append(f\"{s[i-1]}{count}\")\n            count = 1\n    result.append(f\"{s[-1]}{count}\")\n    compressed = \"\".join(result)\n    return compressed if len(compressed) < len(s) else s\n\nif __name__ == \"__main__\":\n    s = input().strip()\n    print(compress(s))"
+  },
+  {
+    "title": "选择排序",
+    "category": "Python",
+    "tags": [
+      "排序",
+      "列表",
+      "循环"
+    ],
+    "difficulty": "medium",
+    "description": "实现选择排序算法：每次从未排序部分选择最小的元素，放到已排序部分的末尾。读取 n 个整数，输出排序后的结果。",
+    "input_format": "第一行一个整数 n。第二行 n 个整数，空格分隔。",
+    "output_format": "排序后的 n 个整数，空格分隔。",
+    "sample_input": "5\n3 1 4 2 5",
+    "sample_output": "1 2 3 4 5",
+    "template_code": "def selection_sort(arr):\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    n = int(input())\n    arr = list(map(int, input().split()))\n    result = selection_sort(arr)\n    print(\" \".join(map(str, result)))",
+    "test_cases": [
+      {
+        "input": "5\n3 1 4 2 5",
+        "expected_output": "1 2 3 4 5"
+      },
+      {
+        "input": "3\n1 1 1",
+        "expected_output": "1 1 1"
+      },
+      {
+        "input": "4\n9 8 7 6",
+        "expected_output": "6 7 8 9"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def selection_sort(arr):\n    n = len(arr)\n    for i in range(n - 1):\n        min_idx = i\n        for j in range(i + 1, n):\n            if arr[j] < arr[min_idx]:\n                min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr\n\nif __name__ == \"__main__\":\n    n = int(input())\n    arr = list(map(int, input().split()))\n    result = selection_sort(arr)\n    print(\" \".join(map(str, result)))"
+  },
+  {
+    "title": "二分查找",
+    "category": "Python",
+    "tags": [
+      "查找",
+      "列表",
+      "循环",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "在已排序的升序数组中实现二分查找。给定一个升序数组和目标值，返回目标值在数组中的下标（从 0 开始）。如果不存在则返回 -1。",
+    "input_format": "第一行为 n 和 target，空格分隔。第二行为 n 个升序排列的整数，空格分隔。",
+    "output_format": "目标值的下标，或 -1。",
+    "sample_input": "6 5\n1 3 5 7 9 11",
+    "sample_output": "2",
+    "template_code": "def binary_search(arr, target):\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    n, target = map(int, input().split())\n    arr = list(map(int, input().split()))\n    print(binary_search(arr, target))",
+    "test_cases": [
+      {
+        "input": "6 5\n1 3 5 7 9 11",
+        "expected_output": "2"
+      },
+      {
+        "input": "4 2\n1 3 5 7",
+        "expected_output": "-1"
+      },
+      {
+        "input": "1 100\n100",
+        "expected_output": "0"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def binary_search(arr, target):\n    left, right = 0, len(arr) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1\n\nif __name__ == \"__main__\":\n    n, target = map(int, input().split())\n    arr = list(map(int, input().split()))\n    print(binary_search(arr, target))"
+  },
+  {
+    "title": "简单栈模拟",
+    "category": "Python",
+    "tags": [
+      "栈",
+      "列表",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "用列表模拟栈的基本操作。输入一个操作序列，push x 表示入栈，pop 表示出栈并输出弹出的元素，top 表示输出栈顶元素。如果 pop 或 top 时栈为空，输出 error。",
+    "input_format": "第一行为操作数 m，接下来 m 行每行一个操作。",
+    "output_format": "每个 pop 或 top 操作输出一行结果。",
+    "sample_input": "6\npush 1\npush 2\ntop\npop\npop\npop",
+    "sample_output": "2\n2\n1\nerror",
+    "template_code": "def simulate():\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    simulate()",
+    "test_cases": [
+      {
+        "input": "6\npush 1\npush 2\ntop\npop\npop\npop",
+        "expected_output": "2\n2\n1\nerror"
+      },
+      {
+        "input": "3\npop\ntop\npush 5",
+        "expected_output": "error\nerror"
+      },
+      {
+        "input": "4\npush 10\ntop\npop\ntop",
+        "expected_output": "10\n10\nerror"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def simulate():\n    m = int(input())\n    stack = []\n    for _ in range(m):\n        op = input().split()\n        if op[0] == \"push\":\n            stack.append(int(op[1]))\n        elif op[0] == \"pop\":\n            if stack:\n                print(stack.pop())\n            else:\n                print(\"error\")\n        elif op[0] == \"top\":\n            if stack:\n                print(stack[-1])\n            else:\n                print(\"error\")\n\nif __name__ == \"__main__\":\n    simulate()"
+  },
+  {
+    "title": "二分查找",
+    "category": "C",
+    "tags": [
+      "查找",
+      "数组",
+      "循环",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "在已排序的升序数组中实现二分查找。给定一个升序数组和目标值，返回目标值在数组中的下标（从 0 开始）。如果不存在则输出 -1。",
+    "input_format": "第一行为 n 和 target（空格分隔）。第二行为 n 个升序排列的整数，空格分隔。",
+    "output_format": "目标值的下标，或 -1。",
+    "sample_input": "6 5\n1 3 5 7 9 11",
+    "sample_output": "2",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n, target;\n    scanf(\"%d %d\", &n, &target);\n    int arr[100];\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "6 5\n1 3 5 7 9 11",
+        "expected_output": "2"
+      },
+      {
+        "input": "4 2\n1 3 5 7",
+        "expected_output": "-1"
+      },
+      {
+        "input": "1 100\n100",
+        "expected_output": "0"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, target;\n    scanf(\"%d %d\", &n, &target);\n    int arr[100];\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    int left = 0, right = n - 1, ans = -1;\n    while (left <= right) {\n        int mid = (left + right) / 2;\n        if (arr[mid] == target) { ans = mid; break; }\n        else if (arr[mid] < target) left = mid + 1;\n        else right = mid - 1;\n    }\n    printf(\"%d\\n\", ans);\n    return 0;\n}"
+  },
+  {
+    "title": "选择排序",
+    "category": "C",
+    "tags": [
+      "排序",
+      "数组",
+      "循环",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "实现选择排序算法：每次从未排序部分选择最小元素，与未排序部分的第一个元素交换。读取 n 个整数，输出排序后的结果。",
+    "input_format": "第一行为 n。第二行为 n 个整数，空格分隔。",
+    "output_format": "排序后的 n 个整数，空格分隔。",
+    "sample_input": "5\n3 1 4 2 5",
+    "sample_output": "1 2 3 4 5",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n, arr[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "5\n3 1 4 2 5",
+        "expected_output": "1 2 3 4 5"
+      },
+      {
+        "input": "3\n1 1 1",
+        "expected_output": "1 1 1"
+      },
+      {
+        "input": "4\n9 8 7 6",
+        "expected_output": "6 7 8 9"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, arr[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    for (int i = 0; i < n - 1; i++) {\n        int min_idx = i;\n        for (int j = i + 1; j < n; j++)\n            if (arr[j] < arr[min_idx])\n                min_idx = j;\n        int temp = arr[i];\n        arr[i] = arr[min_idx];\n        arr[min_idx] = temp;\n    }\n    for (int i = 0; i < n; i++) {\n        if (i > 0) printf(\" \");\n        printf(\"%d\", arr[i]);\n    }\n    printf(\"\\n\");\n    return 0;\n}"
+  },
+  {
+    "title": "数制转换",
+    "category": "C",
+    "tags": [
+      "栈",
+      "循环",
+      "数学",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "读取一个十进制正整数 N 和目标进制 B（2<=B<=16），将 N 转换为 B 进制数输出。对于大于 9 的数字用大写字母 A-F 表示。",
+    "input_format": "一行两个整数 N 和 B，空格分隔。",
+    "output_format": "转换后的 B 进制数。",
+    "sample_input": "255 16",
+    "sample_output": "FF",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n, b;\n    scanf(\"%d %d\", &n, &b);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "255 16",
+        "expected_output": "FF"
+      },
+      {
+        "input": "10 2",
+        "expected_output": "1010"
+      },
+      {
+        "input": "8 8",
+        "expected_output": "10"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, b, i = 0;\n    char result[100];\n    char digits[] = \"0123456789ABCDEF\";\n    scanf(\"%d %d\", &n, &b);\n    if (n == 0) { printf(\"0\\n\"); return 0; }\n    while (n > 0) {\n        result[i++] = digits[n % b];\n        n /= b;\n    }\n    for (int j = i - 1; j >= 0; j--)\n        putchar(result[j]);\n    printf(\"\\n\");\n    return 0;\n}"
+  },
+  {
+    "title": "查找众数",
+    "category": "C",
+    "tags": [
+      "数组",
+      "循环",
+      "条件判断",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "读取 n 个整数（n<=100），找出出现次数最多的数（众数）。如果有多个众数，输出最小的那个。",
+    "input_format": "第一行为整数 n。第二行为 n 个整数，空格分隔。",
+    "output_format": "出现次数最多的数。",
+    "sample_input": "6\n1 3 2 3 3 2",
+    "sample_output": "3",
+    "template_code": "#include <stdio.h>\n\nint main() {\n    int n, arr[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    // 在此编写你的代码\n    return 0;\n}",
+    "test_cases": [
+      {
+        "input": "6\n1 3 2 3 3 2",
+        "expected_output": "3"
+      },
+      {
+        "input": "4\n1 2 2 1",
+        "expected_output": "1"
+      },
+      {
+        "input": "3\n5 5 5",
+        "expected_output": "5"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "#include <stdio.h>\n\nint main() {\n    int n, arr[100];\n    scanf(\"%d\", &n);\n    for (int i = 0; i < n; i++)\n        scanf(\"%d\", &arr[i]);\n    int best_val = arr[0], best_cnt = 0;\n    for (int i = 0; i < n; i++) {\n        int cnt = 0;\n        for (int j = 0; j < n; j++)\n            if (arr[j] == arr[i]) cnt++;\n        if (cnt > best_cnt || (cnt == best_cnt && arr[i] < best_val)) {\n            best_cnt = cnt;\n            best_val = arr[i];\n        }\n    }\n    printf(\"%d\\n\", best_val);\n    return 0;\n}"
+  },
+  {
+    "title": "约瑟夫环",
+    "category": "Python",
+    "tags": [
+      "列表",
+      "循环",
+      "数学",
+      "数据结构"
+    ],
+    "difficulty": "medium",
+    "description": "n 个人围成一圈，从第 1 个人开始报数，数到 m 的人出列，下一个人重新从 1 开始报数。输出出列的顺序编号（编号从 1 到 n）。",
+    "input_format": "一行两个整数 n 和 m，空格分隔。2<=n<=100, 1<=m<=n。",
+    "output_format": "出列顺序，编号间空格分隔。",
+    "sample_input": "5 3",
+    "sample_output": "3 1 5 2 4",
+    "template_code": "def josephus(n, m):\n    # 在此编写你的代码\n    pass\n\nif __name__ == \"__main__\":\n    n, m = map(int, input().split())\n    result = josephus(n, m)\n    print(\" \".join(map(str, result)))",
+    "test_cases": [
+      {
+        "input": "5 3",
+        "expected_output": "3 1 5 2 4"
+      },
+      {
+        "input": "3 2",
+        "expected_output": "2 1 3"
+      },
+      {
+        "input": "7 2",
+        "expected_output": "2 4 6 1 5 3 7"
+      }
+    ],
+    "time_limit_ms": 400,
+    "memory_limit_mb": 64,
+    "stack_limit_mb": 64,
+    "source": "manual",
+    "solution_code": "def josephus(n, m):\n    people = list(range(1, n + 1))\n    result = []\n    idx = 0\n    while people:\n        idx = (idx + m - 1) % len(people)\n        result.append(people.pop(idx))\n    return result\n\nif __name__ == \"__main__\":\n    n, m = map(int, input().split())\n    result = josephus(n, m)\n    print(\" \".join(map(str, result)))"
+  }
+]

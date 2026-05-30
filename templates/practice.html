@@ -1,0 +1,44 @@
+<!-- Daily Practice Page -->
+<div class="practice-page">
+    <div class="mode-tabs" id="mode-tabs">
+        <button class="mode-tab {{ 'active' if mode == 'daily' else '' }}"
+                hx-get="/practice?mode=daily"
+                hx-target="#practice-content"
+                hx-swap="innerHTML"
+                hx-push-url="true">
+            📅 每日练习
+        </button>
+        <button class="mode-tab {{ 'active' if mode == 'category' else '' }}"
+                hx-get="/practice?mode=category"
+                hx-target="#practice-content"
+                hx-swap="innerHTML"
+                hx-push-url="true">
+            🏷️ 分类练习
+        </button>
+        <button class="mode-tab {{ 'active' if mode == 'review' else '' }}"
+                hx-get="/practice?mode=review"
+                hx-target="#practice-content"
+                hx-swap="innerHTML"
+                hx-push-url="true">
+            🔄 复习模式
+        </button>
+    </div>
+
+    <div id="practice-content">
+        {% include 'practice_content.html' %}
+    </div>
+</div>
+
+<script>
+// Update mode tab active state after any HTMX swap within practice-content
+document.body.addEventListener('htmx:afterSettle', function(evt) {
+    var tabs = document.querySelectorAll('#mode-tabs .mode-tab');
+    if (!tabs.length) return;
+    var url = new URL(window.location.href);
+    var mode = url.searchParams.get('mode') || 'daily';
+    tabs.forEach(function(b) {
+        var href = b.getAttribute('hx-get') || '';
+        b.classList.toggle('active', href.includes('mode=' + mode));
+    });
+});
+</script>

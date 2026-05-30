@@ -1,0 +1,125 @@
+<div class="stats-page">
+    <div class="stats-grid-2col">
+        <div class="card">
+            <h4>近30天正确率趋势</h4>
+            <div id="chart-correct-trend" class="chart-container" style="height:300px;"></div>
+        </div>
+        <div class="card">
+            <h4>分类正确率雷达图</h4>
+            <div id="chart-category-radar" class="chart-container" style="height:300px;"></div>
+        </div>
+    </div>
+    <div class="stats-grid-2col">
+        <div class="card">
+            <h4>易错知识点 TOP5</h4>
+            <div id="chart-top-errors" class="chart-container" style="height:300px;"></div>
+        </div>
+        <div class="card">
+            <h4>学习热力图（近一年）</h4>
+            <div id="chart-heatmap" class="chart-container" style="height:300px;"></div>
+        </div>
+    </div>
+    <div class="card report-section">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <h3 style="margin:0;">AI 学习报告</h3>
+            <button class="btn btn-primary" hx-post="/api/generate-report" hx-target="#report-area" hx-swap="innerHTML">生成本周报告</button>
+        </div>
+        <div id="report-area">
+            {% if reports %}
+            <div class="report-history">
+                <h4>历史报告</h4>
+                <div class="report-list">
+                    {% for r in reports %}
+                    <div class="report-item" hx-get="/api/report/{{ r.id }}" hx-target="#report-detail" hx-swap="innerHTML">
+                        <div><span class="report-type">{{ r.report_type or '学习报告' }}</span></div>
+                        <span class="report-date">{{ r.created_at }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="report-detail" class="mt-3"></div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    var trendData = {{ trend_data | tojson }};
+    var trendDates = [], trendRates = [];
+    for (var i = 0; i < trendData.length; i++) {
+        trendDates.push(trendData[i].date);
+        trendRates.push(trendData[i].total > 0 ? parseFloat((trendData[i].correct / trendData[i].total * 100).toFixed(1)) : 0);
+    }
+    var trendChart = echarts.init(document.getElementById('chart-correct-trend'));
+    trendChart.setOption({
+        tooltip: { trigger: 'axis' },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        xAxis: { type: 'category', data: trendDates, axisLabel: { rotate: 45, fontSize: 10 } },
+        yAxis: { type: 'value', min: 0, max: 100, axisLabel: { formatter: '{value}%' } },
+        series: [{
+            name: 'correct_rate', type: 'line', data: trendRates, smooth: true,
+            lineStyle: { color: '#4f46e5', width: 2 }, itemStyle: { color: '#4f46e5' },
+            areaStyle: { color: new echarts.graphic.LinearGradient(0,0,0,1,[
+                {offset:0,color:'rgba(79,70,229,0.25)'},{offset:1,color:'rgba(79,70,229,0.02)'}]) },
+            markLine: { silent: true, data: [{yAxis:60,label:{formatter:'60%'},lineStyle:{color:'#f59e0b',type:'dashed'}}] }
+        }]
+    });
+
+    var radarData = {{ radar_data | tojson }};
+    var radarIndicators = [], radarValues = [];
+    for (var i = 0; i < radarData.length; i++) {
+        radarIndicators.push({ name: radarData[i].category, max: 100 });
+        radarValues.push(radarData[i].rate);
+    }
+    var radarChart = echarts.init(document.getElementById('chart-category-radar'));
+    radarChart.setOption({
+        tooltip: {},
+        radar: { indicator: radarIndicators, center: ['50%','55%'], radius: '65%' },
+        series: [{ type: 'radar', data: [{value:radarValues,name:'correct_rate%'}],
+            areaStyle: { color: 'rgba(79,70,229,0.2)' }, lineStyle: { color: '#4f46e5' }, itemStyle: { color: '#4f46e5' } }]
+    });
+
+    var errorData = {{ error_data | tojson }};
+    var errorTags = [], errorCounts = [];
+    for (var i = errorData.length - 1; i >= 0; i--) {
+        errorTags.push(errorData[i].tag); errorCounts.push(errorData[i].count);
+    }
+    var errorChart = echarts.init(document.getElementById('chart-top-errors'));
+    errorChart.setOption({
+        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
+        grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+        xAxis: { type: 'value' }, yAxis: { type: 'category', data: errorTags, axisLabel: { fontSize: 11 } },
+        series: [{ type: 'bar', data: errorCounts, barMaxWidth: 36,
+            itemStyle: { color: new echarts.graphic.LinearGradient(0,0,1,0,[
+                {offset:0,color:'#ef4444'},{offset:1,color:'#f97316'}]) } }]
+    });
+
+    var heatmapData = {{ heatmap_data | tojson }};
+    var dateCountMap = {};
+    for (var i = 0; i < heatmapData.length; i++) { dateCountMap[heatmapData[i][0]] = heatmapData[i][1]; }
+    function fmtD(y,m,d){ return y+'-'+(m<10?'0':'')+m+'-'+(d<10?'0':'')+d; }
+    var hData = [], today = new Date(), maxCnt = 1;
+    for (var w = 52; w >= 0; w--) {
+        for (var dow = 0; dow < 7; dow++) {
+            var d = new Date(today);
+            d.setDate(d.getDate() - (w * 7 + (6 - dow)));
+            var ds = fmtD(d.getFullYear(), d.getMonth()+1, d.getDate());
+            var cnt = dateCountMap[ds] || 0; hData.push([ds, cnt]); if (cnt > maxCnt) maxCnt = cnt;
+        }
+    }
+    var heatmapChart = echarts.init(document.getElementById('chart-heatmap'));
+    heatmapChart.setOption({
+        tooltip: { formatter: function(p){ return p.value[0]+': '+p.value[1]+' 题'; } },
+        visualMap: { min: 0, max: maxCnt, calculable: true, orient: 'horizontal', left: 'center', bottom: 0,
+            inRange: { color: ['#f1f5f9','#c7d2fe','#818cf8','#4f46e5','#3730a3'] } },
+        calendar: { cellSize: ['auto',14], range: [hData[0][0], hData[hData.length-1][0]],
+            dayLabel: { nameMap: ['日','一','二','三','四','五','六'] },
+            monthLabel: { nameMap: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'] },
+            splitLine: { lineStyle: { color: '#fff' } }, itemStyle: { borderColor: '#fff', borderWidth: 2 } },
+        series: [{ type: 'heatmap', coordinateSystem: 'calendar', data: hData }]
+    });
+
+    window.addEventListener('resize', function(){ trendChart.resize(); radarChart.resize(); errorChart.resize(); heatmapChart.resize(); });
+})();
+</script>

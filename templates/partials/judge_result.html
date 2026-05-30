@@ -1,0 +1,40 @@
+<!-- Judge result partial -->
+<div class="judge-result">
+    {% set status_class = {
+        'Accepted': 'status-accepted',
+        'Wrong Answer': 'status-wrong',
+        'Compilation Error': 'status-compile',
+        'Time Limit Exceeded': 'status-timeout',
+        'Runtime Error': 'status-runtime'
+    } %}
+    <div class="judge-status {{ status_class.get(result.status, 'status-unknown') }}">
+        {{ result.status }}
+    </div>
+    <div class="judge-summary">
+        通过 {{ result.passed_cases }} / {{ result.total_cases }} 个测试用例
+        {% if result.total_time_ms %}| 耗时 {{ result.total_time_ms }}ms{% endif %}
+    </div>
+    {% if result.compile_error %}
+    <div class="compile-error">
+        <pre>{{ result.compile_error }}</pre>
+    </div>
+    {% endif %}
+    <div class="test-cases">
+        {% for case in result.case_results %}
+        <div class="test-case {{ 'tc-pass' if case.passed else 'tc-fail' }}">
+            <div class="tc-header">
+                <span>用例 #{{ case.case_id }}</span>
+                <span>{{ '✅' if case.passed else '❌' }}</span>
+            </div>
+            {% if not case.passed %}
+            <div class="tc-detail">
+                <div><strong>输入：</strong><code>{{ case.input_preview }}</code></div>
+                <div><strong>期望：</strong><code>{{ case.expected_output }}</code></div>
+                <div><strong>实际：</strong><code>{{ case.actual_output or case.error_message }}</code></div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <a href="/practice/free" class="btn btn-outline btn-sm mt-2">返回练习</a>
+</div>
