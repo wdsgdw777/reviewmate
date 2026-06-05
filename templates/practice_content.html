@@ -95,6 +95,34 @@
     {% endif %}
 {% endif %}
 
+{% if mode == 'daily' %}
+<!-- Category filter tabs for daily practice -->
+<div class="category-filter-bar" style="display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;">
+    <span style="font-weight:600;color:var(--color-text);margin-right:4px;">📂 分类：</span>
+    {% set categories = ['Python', 'C', '数据结构', 'SQL'] %}
+    {% for cat in categories %}
+    <button class="btn btn-sm {{ 'btn-primary' if category == cat else 'btn-outline' }}"
+            style="border-radius:20px;padding:6px 18px;font-size:.85rem;transition:all 0.15s;"
+            hx-get="/practice?mode=daily&category={{ cat }}"
+            hx-target="#practice-content"
+            hx-swap="innerHTML"
+            hx-push-url="true">
+        {{ cat }}
+    </button>
+    {% endfor %}
+    {% if category %}
+    <button class="btn btn-sm btn-outline"
+            style="border-radius:20px;padding:6px 14px;font-size:.85rem;color:var(--color-text-muted);"
+            hx-get="/practice?mode=daily"
+            hx-target="#practice-content"
+            hx-swap="innerHTML"
+            hx-push-url="true">
+        ✕ 全部
+    </button>
+    {% endif %}
+</div>
+{% endif %}
+
 <div id="question-container" class="question-container">
     {% if question %}
         {% include 'partials/question_card.html' %}
@@ -121,7 +149,7 @@
         <div class="card-body text-center">
             <p style="font-size:1.1rem;margin-bottom:8px;">📝 准备开始练习</p>
             <button class="btn btn-primary mt-3"
-                    hx-get="/api/next-question?mode={{ mode }}&filter_type={{ filter_type }}&filter_value={{ filter_value }}"
+                    hx-get="/api/next-question?mode={{ mode }}&filter_type={{ filter_type }}&filter_value={{ filter_value }}&category={{ category }}"
                     hx-target="#question-container" hx-swap="innerHTML">🎯 开始答题</button>
         </div>
     </div>
