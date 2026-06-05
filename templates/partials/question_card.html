@@ -21,7 +21,7 @@
             {% for opt in question.options %}
             <button class="btn btn-outline option-btn" style="text-align:left;justify-content:flex-start;"
                     hx-post="/api/submit-answer"
-                    hx-vals='{"question_id":"{{ question.id }}","question_type":"choice","user_answer":"{{ labels[loop.index0] }}","mode":"{{ mode }}","filter_type":"{{ filter_type }}","filter_value":"{{ filter_value }}"}'
+                    hx-vals='{"question_id":"{{ question.id }}","question_type":"choice","user_answer":"{{ labels[loop.index0] }}","mode":"{{ mode }}","filter_type":"{{ filter_type }}","filter_value":"{{ filter_value }}","category":"{{ category }}"}'
                     hx-target="#question-container"
                     hx-swap="innerHTML">
                 <strong style="margin-right:6px;">{{ labels[loop.index0] }}.</strong> {{ opt }}
@@ -38,6 +38,7 @@
             <input type="hidden" name="mode" value="{{ mode }}">
             <input type="hidden" name="filter_type" value="{{ filter_type }}">
             <input type="hidden" name="filter_value" value="{{ filter_value }}">
+            <input type="hidden" name="category" value="{{ category }}">
             <textarea name="user_answer" class="form-textarea" rows="5"
                       placeholder="请输入你的答案..." required></textarea>
             <button type="submit" class="btn btn-primary" style="align-self:flex-start;">提交答案</button>

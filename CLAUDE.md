@@ -23,7 +23,7 @@ reviewmate/
 ├── database.py            # SQLite 操作, SM-2 算法
 ├── ai_client.py           # DeepSeek API 封装 (出题/分析/报告/对话)
 ├── judge_sandbox.py       # 代码判题沙箱 (Python + C)
-├── seed_data.json         # 选择题/简答题种子数据 (176 道)
+├── seed_data.json         # 选择题/简答题种子数据 (236 道)
 ├── seed_code_data.json    # 编程题种子数据 (39 道, PTA 风格)
 ├── requirements.txt       # Python 依赖
 ├── start.sh / start.bat   # 启动脚本 (端口 8520)
@@ -137,7 +137,7 @@ easiness = max(1.3, easiness)
 | 方法 | 路径 | 功能 |
 |------|------|------|
 | GET | / | 仪表盘 — 统计数据、正确率、连续打卡、薄弱标签 |
-| GET | /practice | 每日练习 — 支持 mode=daily/review/category, HTMX 局部刷新 |
+| GET | /practice | 每日练习 — 支持 mode=daily/review/category, category=Python/C/数据结构/SQL 分类筛选, HTMX 局部刷新 |
 | GET | /practice/free | 自由练习 — 编程题，按 category 随机选题 |
 | GET | /library | 题库管理 — 选择题/编程题列表、筛选、CRUD |
 | GET | /stats | 统计中心 — 趋势图、雷达图、错题排行、热力图、AI 报告 |
@@ -200,13 +200,22 @@ easiness = max(1.3, easiness)
 变量与数据类型, 输入输出(printf/scanf), 运算符, 条件判断(if/else/switch), 循环(for/while/do-while), 数组(一维/二维), 函数(定义/调用/递归), 指针基础, 字符串, 结构体入门, 内存管理入门
 
 ### Python
-变量与数据类型, 输入输出(print/input), 运算符, 条件判断(if/elif/else), 循环(for/while), 列表, 字典, 字符串操作, 函数(定义/参数/返回值), 列表推导式, 文件读写, 异常处理入门, 切片操作
+变量与数据类型, 输入输出(print/input), 运算符, 条件判断(if/elif/else), 循环(for/while), 列表, 字典, 字符串操作, 函数(定义/参数/返回值), 列表推导式, 文件读写, 异常处理入门, 切片操作, 集合(set), 元组(tuple), 生成器(yield), 面向对象(class/继承/super), 模块与包(import/__name__), 装饰器(decorator)
 
 ### SQL
-SELECT 查询, WHERE 过滤, ORDER BY 排序, LIKE 模糊匹配, INSERT/UPDATE/DELETE, 聚合函数(COUNT/SUM/AVG/MAX/MIN), GROUP BY + HAVING, JOIN(INNER/LEFT), 子查询, DISTINCT, LIMIT/OFFSET
+SELECT 查询, WHERE 过滤, ORDER BY 排序, LIKE 模糊匹配, INSERT/UPDATE/DELETE, 聚合函数(COUNT/SUM/AVG/MAX/MIN), GROUP BY + HAVING, JOIN(INNER/LEFT), 子查询, DISTINCT, LIMIT/OFFSET, 索引, 事务(ACID/COMMIT/ROLLBACK), 视图(VIEW), 约束(PK/FK/CHECK)
 
 ### 数据结构
-数组, 链表(单向/双向), 栈(LIFO), 队列(FIFO), 排序(冒泡/选择/插入/快排概念), 查找(顺序/二分), 树基础(二叉树/遍历概念), 哈希表概念
+数组, 链表(单向/双向/循环), 栈(LIFO), 队列(FIFO/循环队列), 排序(冒泡/选择/插入/快排/归并/堆排), 查找(顺序/二分/哈希), 树基础(二叉树/遍历/BST), 哈希表概念(冲突/链地址法), 图论基础(DFS/BFS/DAG), 堆(二叉堆/堆排序), 递归与分治, 动态规划(最优子结构/重叠子问题), 贪心算法
+
+### 题库分布
+| 类别 | 选择/简答 | 编程题 | 合计 |
+|------|----------|--------|------|
+| C | 56 | 17 | 73 |
+| Python | 74 | 22 | 96 |
+| SQL | 46 | 0 | 46 |
+| 数据结构 | 60 | 0 | 60 |
+| **合计** | **236** | **39** | **275** |
 
 ## AI 模块 (ai_client.py)
 
@@ -228,6 +237,7 @@ SELECT 查询, WHERE 过滤, ORDER BY 排序, LIKE 模糊匹配, INSERT/UPDATE/D
 - 题库扩充: 编辑 seed_data.json / seed_code_data.json 或通过设置页 AI 对话生成
 - 编程题按 PTA 平台格式: 含输入格式、输出格式、输入样例、输出样例、代码长度限制、时间限制、内存限制、栈限制
 - 自由练习室分类: C (17 道) / Python (22 道), 侧重基础语法、数据结构和算法入门
+- 每日练习支持按分类筛选 (Python/C/数据结构/SQL), category 参数透传至 get_daily_question()、submit-answer、next-question 全链路
 - 删除 data/reviewmate.db 即可重置到种子数据: 重启应用自动从 JSON 重新导入 (含 39 道 PTA 编程题)
 - 旧数据库自动迁移: init_db() 会通过 ALTER TABLE 补充缺失的 PTA 字段
 - AI 功能需要 DeepSeek API Key, 在设置页配置 (base64 编码存储)

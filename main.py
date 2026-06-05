@@ -107,10 +107,11 @@ async def page_dashboard(request: Request):
 
 @app.get("/practice", response_class=HTMLResponse)
 async def page_practice(request: Request, mode: str = "daily",
-                         filter_type: str = "", filter_value: str = ""):
+                         filter_type: str = "", filter_value: str = "",
+                         category: str = ""):
     question = None
     if mode == "daily":
-        question = get_daily_question("daily")
+        question = get_daily_question("daily", category=category if category else None)
     elif mode == "review":
         question = get_daily_question("review")
     elif mode == "category":
@@ -126,12 +127,14 @@ async def page_practice(request: Request, mode: str = "daily",
         return templates.TemplateResponse("practice_content.html", {
             "request": request, "mode": mode, "question": question,
             "filter_type": filter_type, "filter_value": filter_value,
+            "category": category,
             "all_tags": tags, "assessment_counts": counts,
         })
 
     return _render("practice", request, title="每日练习", mode=mode,
                    question=question, filter_type=filter_type,
-                   filter_value=filter_value, all_tags=tags, assessment_counts=counts)
+                   filter_value=filter_value, category=category,
+                   all_tags=tags, assessment_counts=counts)
 
 
 @app.get("/practice/free", response_class=HTMLResponse)
@@ -195,7 +198,8 @@ async def api_test():
 async def api_submit_answer(request: Request, question_id: int = Form(...),
                             question_type: str = Form(...), user_answer: str = Form(""),
                             mode: str = Form("daily"), self_assessment: str = Form(""),
-                            filter_type: str = Form(""), filter_value: str = Form("")):
+                            filter_type: str = Form(""), filter_value: str = Form(""),
+                            category: str = Form("")):
     if self_assessment:
         record = get_latest_answer_record(question_id, question_type)
         if record:
@@ -204,6 +208,8 @@ async def api_submit_answer(request: Request, question_id: int = Form(...),
         params = f"mode={mode}"
         if filter_type:
             params += f"&filter_type={filter_type}&filter_value={filter_value}"
+        if category:
+            params += f"&category={category}"
         next_url = f"/api/next-question?{params}"
         return HTMLResponse(
             f'<div class="toast toast-success" style="text-align:center;padding:24px;">'
@@ -253,6 +259,7 @@ async def api_submit_answer(request: Request, question_id: int = Form(...),
         "question": q, "user_answer": user_answer, "record_id": record_id,
         "question_id": question_id, "question_type": question_type, "mode": mode,
         "filter_type": filter_type, "filter_value": filter_value,
+        "category": category,
         "answer": q.get("answer", ""), "explanation": q.get("explanation", ""),
     })
 
@@ -262,6 +269,7 @@ async def api_submit_answer(request: Request, question_id: int = Form(...),
 @app.get("/api/next-question")
 async def api_next_question(request: Request, mode: str = "daily",
                              filter_type: str = "", filter_value: str = "",
+                             category: str = "",
                              question_id: int = 0):
     """Return just the question card (or empty state) for auto-next after self-assessment."""
     question = None
@@ -276,7 +284,7 @@ async def api_next_question(request: Request, mode: str = "daily",
                     except (json.JSONDecodeError, TypeError):
                         pass
     elif mode == "daily":
-        question = get_daily_question("daily")
+        question = get_daily_question("daily", category=category if category else None)
     elif mode == "review":
         question = get_daily_question("review")
     elif mode == "category":
@@ -289,6 +297,7 @@ async def api_next_question(request: Request, mode: str = "daily",
         return templates.TemplateResponse("partials/question_card.html", {
             "request": request, "question": question, "mode": mode,
             "filter_type": filter_type, "filter_value": filter_value,
+            "category": category,
         })
     else:
         # Return empty state appropriate for the mode

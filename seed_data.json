@@ -3313,5 +3313,1188 @@
     ],
     "explanation": "哈希表性能的关键在哈希函数的质量和冲突解决策略。Python 的 dict 使用高质量的哈希函数和优化的开放地址法，实际表现非常好。",
     "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "图",
+      "图论"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "图 G=(V, E) 中，V 和 E 分别表示什么？",
+    "options": [
+      "A. V 是边集，E 是顶点集",
+      "B. V 是顶点集，E 是边集",
+      "C. V 是值集，E 是表达式集",
+      "D. V 是向量，E 是元素"
+    ],
+    "answer": "B",
+    "explanation": "图由顶点（Vertex，V）和边（Edge，E）组成。边连接两个顶点，表示它们之间的关系。有向图的边有方向（用箭头表示），无向图的边无方向。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "图",
+      "图论"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "邻接矩阵和邻接表是两种常用的图存储方式。对于稀疏图（边数远少于 n²），哪种更节省空间？",
+    "options": [
+      "A. 邻接矩阵",
+      "B. 邻接表",
+      "C. 两者相同",
+      "D. 取决于顶点数"
+    ],
+    "answer": "B",
+    "explanation": "邻接矩阵固定占 O(n²) 空间，而邻接表只存储实际存在的边，占 O(n+e) 空间。当边数 e 远小于 n² 时（稀疏图），邻接表显著节省空间。但邻接矩阵判断两个顶点是否有边只需 O(1)（直接查 matrix[i][j]），邻接表需要遍历链表。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "图",
+      "遍历"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "图的深度优先遍历（DFS）和广度优先遍历（BFS）分别使用什么辅助数据结构？",
+    "options": [
+      "A. DFS用队列，BFS用栈",
+      "B. DFS用栈，BFS用队列",
+      "C. 两者都用队列",
+      "D. 两者都用栈"
+    ],
+    "answer": "B",
+    "explanation": "DFS 使用栈（或递归——递归本质是函数调用栈），先深入后回溯。BFS 使用队列，按层展开，先近后远。这是理解两种遍历策略记忆口诀：DFS→Stack（深→栈），BFS→Queue（广→队）。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "图",
+      "图论"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "什么是有向无环图（DAG）？举一个 DAG 在实际中的应用例子。",
+    "answer": "DAG（Directed Acyclic Graph）是有向图且不存在环路——从任意顶点出发沿有向边行走，不可能回到自身。实际应用：任务调度中的依赖关系（如 Makefile、课程先修关系），拓扑排序只能作用于 DAG；区块链中的交易依赖图。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "有向",
+      "无环",
+      "DAG",
+      "拓扑排序",
+      "依赖",
+      "调度"
+    ],
+    "explanation": "DAG 的核心特征：有方向、无环路。拓扑排序（Topological Sort）是 DAG 上最重要的算法之一，可以将图中所有顶点排成一个线性序列，使每条边 (u,v) 中 u 在 v 之前。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "堆"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "最小堆中，根节点的值满足什么条件？",
+    "options": [
+      "A. 根节点是堆中最大的元素",
+      "B. 根节点是堆中最小的元素",
+      "C. 根节点是堆的中间值",
+      "D. 根节点没有特殊要求"
+    ],
+    "answer": "B",
+    "explanation": "最小堆的性质：任意节点的值 ≤ 其所有子节点的值。因此根节点（堆顶）一定是堆中的最小元素。最大堆则相反：父节点 ≥ 子节点，堆顶是最大值。堆常用于实现优先队列。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "堆"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "堆一般用什么数据结构来实现？插入和删除堆顶的时间复杂度是多少？",
+    "options": [
+      "A. 链表，O(n)",
+      "B. 完全二叉树用数组存储，O(log n)",
+      "C. 普通数组，O(1)",
+      "D. 哈希表，O(1)"
+    ],
+    "answer": "B",
+    "explanation": "堆通常用完全二叉树的数组表示：索引 i 的左孩子是 2i+1，右孩子是 2i+2，父节点是 (i-1)//2。插入（上浮）和删除堆顶（下沉）都只需沿树高进行调整，复杂度 O(log n)。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "堆",
+      "排序"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "堆排序的基本思想和时间复杂度是什么？它是否稳定？",
+    "answer": "堆排序的基本思想：(1) 建堆——将数组构建成最大堆，O(n)；(2) 反复取堆顶（最大值），与堆末尾交换，然后调整堆，重复 n 次，每次 O(log n)。总时间复杂度 O(n log n)。堆排序是不稳定的，因为交换可能打乱相等元素的相对顺序。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "建堆",
+      "交换",
+      "调整",
+      "O(n log n)",
+      "不稳定",
+      "最大堆"
+    ],
+    "explanation": "堆排序的优势：原地排序（O(1) 额外空间），时间复杂度稳定 O(n log n)。劣势：不稳定，实际中常数因子比快排大。适合对空间要求高的场景。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "递归"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "递归函数的两个必要组成部分是什么？",
+    "options": [
+      "A. 循环和条件判断",
+      "B. 基准条件（终止条件）和递归调用",
+      "C. 数组和指针",
+      "D. 输入和输出"
+    ],
+    "answer": "B",
+    "explanation": "递归函数必须包含：(1) 基准条件（base case）——确定何时停止递归；(2) 递归步骤——将问题分解为更小的子问题并调用自身。缺一不可：没有基准条件会导致无限递归（栈溢出），没有递归调用就不是递归。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "递归",
+      "分治"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "分治算法（Divide and Conquer）的三个步骤是什么？",
+    "options": [
+      "A. 分解、解决、合并",
+      "B. 输入、处理、输出",
+      "C. 排序、查找、删除",
+      "D. 建堆、交换、调整"
+    ],
+    "answer": "A",
+    "explanation": "分治法分三步：(1) Divide——将原问题分解为若干个规模较小的子问题；(2) Conquer——递归解决每个子问题；(3) Combine——合并子问题的解得到原问题的解。归并排序和快速排序都是分治法的典型应用。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "递归"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "递归的优缺点分别是什么？什么情况下递归比迭代更合适？",
+    "answer": "优点：代码简洁清晰，天然适合处理具有自相似结构的问题（树遍历、图搜索、分治算法）。缺点：每次递归调用需要额外的函数调用栈空间，可能导致栈溢出；递归调用有额外开销（参数传递、返回地址保存），通常比迭代慢。适合递归的场景：树的前中后序遍历、汉诺塔问题、DFS、分治算法等天然递归结构的问题。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "简洁",
+      "栈溢出",
+      "开销",
+      "树",
+      "遍历",
+      "自相似"
+    ],
+    "explanation": "递归和迭代可以互相转换（递归本质上是系统栈帮我们管理状态）。当问题天然具有递归结构时用递归（代码清晰）；当性能敏感或深度可能很大时用迭代。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "动态规划"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "动态规划的两个核心要素是什么？",
+    "options": [
+      "A. 排序和查找",
+      "B. 最优子结构和重叠子问题",
+      "C. 栈和队列",
+      "D. 递归和循环"
+    ],
+    "answer": "B",
+    "explanation": "动态规划（DP）适用条件：(1) 最优子结构——问题的最优解包含子问题的最优解；(2) 重叠子问题——子问题被重复计算多次。DP 通过「记忆化」（存储已计算子问题的结果）避免重复计算，将指数级复杂度降到多项式级。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "动态规划"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "斐波那契数列 F(n)=F(n-1)+F(n-2) 若直接用递归计算 F(50)，主要问题是什么？",
+    "options": [
+      "A. 结果太大溢出",
+      "B. 大量重复计算，时间复杂度指数级 O(2^n)",
+      "C. 递归深度不够",
+      "D. 语法错误"
+    ],
+    "answer": "B",
+    "explanation": "直接递归计算斐波那契时，F(n) 会分别计算 F(n-1) 和 F(n-2)，而 F(n-1) 内部又重复计算了大量已被 F(n-2) 计算过的子问题，导致总计算量约 O(2^n)。用 DP 思想（记忆化或迭代）可以降到 O(n)。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "动态规划"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "动态规划中的「自顶向下（记忆化搜索）」和「自底向上（递推）」两种实现方式有什么区别？",
+    "answer": "自顶向下（记忆化）：从原问题出发，递归地分解子问题，遇到计算过的子问题直接用缓存结果（Memoization）。自底向上（递推）：从最小的子问题开始，逐步迭代计算更大的子问题，直到得出原问题的解（典型 DP 表）。自顶向下易于实现但递归有栈开销；自底向上通常更高效但需要理清子问题的依赖顺序。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "自顶向下",
+      "自底向上",
+      "记忆化",
+      "递推",
+      "缓存",
+      "子问题"
+    ],
+    "explanation": "两种方式本质相同（都是利用子问题重叠性质避免重复计算），区别在于方向和实现。实际中根据问题特点选择：状态转移关系清晰用递推，依赖关系复杂用记忆化搜索。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "贪心"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "贪心算法的核心策略是什么？",
+    "options": [
+      "A. 尝试所有可能再选最优",
+      "B. 每一步都做当前看来最好的选择，不回溯",
+      "C. 随机选择然后不断优化",
+      "D. 将问题分解为独立的子问题"
+    ],
+    "answer": "B",
+    "explanation": "贪心算法在每一步选择中都采取当前状态下最优的选择（局部最优），希望最终得到全局最优解。优点是简单高效（通常 O(n log n) 内），缺点是不总是能得到全局最优解。如找零钱问题在特定硬币体系下贪心是最优的，但换成别的面额可能就不是。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "贪心",
+      "动态规划"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "贪心算法和动态规划的根本区别是什么？各举一个典型问题的例子。",
+    "answer": "贪心：每步做局部最优选择，不回溯，不一定全局最优。动态规划：通过存储子问题的最优解来构建全局最优解，保证全局最优。例：找零钱（某些面额体系贪心最优）；0-1 背包问题（贪心选性价比最高不保证最优，需用 DP）。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "局部最优",
+      "全局最优",
+      "回溯",
+      "子问题",
+      "0-1背包",
+      "找零"
+    ],
+    "explanation": "判断能否用贪心的关键：问题是否具有「贪心选择性质」——局部最优能推出全局最优。如果可以，贪心更简单；如果不可以，需要 DP 或回溯搜索。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "树",
+      "平衡树"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "AVL 树和红黑树都是什么类型的树？它们解决什么问题？",
+    "options": [
+      "A. 自平衡二叉搜索树，防止 BST 退化为链表",
+      "B. 特殊的堆结构",
+      "C. 用于字符串匹配的树",
+      "D. 多路搜索树"
+    ],
+    "answer": "A",
+    "explanation": "AVL 树（以发明者 Adelson-Velsky 和 Landis 命名）和红黑树都是自平衡二叉搜索树。普通的 BST 在插入有序数据时会退化为链表（查找从 O(log n) 退化到 O(n)），自平衡树通过旋转操作保持树的平衡，保证搜索/插入/删除都是 O(log n)。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "树",
+      "遍历"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "已知二叉树的中序遍历为 D→B→E→A→C，先序遍历为 A→B→D→E→C。请问 A 的左子树包含哪些节点？",
+    "options": [
+      "A. C",
+      "B. D, B, E",
+      "C. D, E",
+      "D. 无法确定"
+    ],
+    "answer": "B",
+    "explanation": "由先序知 A 是根节点。中序中 A 左边的序列 D,B,E 就是 A 的左子树节点。先序中 A 之后紧接着 B，所以 B 是左子树的根。再从中序看 B 左边 D 是左子节点，右边 E 是右子节点。类似可还原右子树只有 C。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "树"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "满二叉树和完全二叉树有什么区别？完全二叉树为什么可以用数组高效存储？",
+    "answer": "满二叉树：每层节点数都达到最大值（第 i 层有 2^(i-1) 个节点）。完全二叉树：除最后一层外每层都是满的，且最后一层的节点从左到右连续排列。完全二叉树用数组存储时，索引关系简单：i 的左孩子是 2i+1，右孩子是 2i+2，父节点是 (i-1)//2，没有空隙浪费空间。普通二叉树用数组存储会有大量空位。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "满二叉树",
+      "完全二叉树",
+      "最后一层",
+      "连续",
+      "数组",
+      "索引"
+    ],
+    "explanation": "堆（二叉堆）就是用完全二叉树的这一特性来实现的。它既保持了树结构的层次关系，又能用数组高效存储和访问。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "排序"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "归并排序（Merge Sort）的空间复杂度是多少？为什么？",
+    "options": [
+      "A. O(1)，原地排序",
+      "B. O(log n)，递归栈空间",
+      "C. O(n)，需要额外数组存放合并结果",
+      "D. O(n²)"
+    ],
+    "answer": "C",
+    "explanation": "归并排序的合并操作需要创建临时数组存放合并后的有序序列，空间复杂度 O(n)。时间复杂度始终是 O(n log n)，且是稳定的（相等元素相对顺序不变）。这是它相比快排的主要优势——最坏情况也是 O(n log n)。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "排序"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "以下排序算法中，时间复杂度在所有情况下（最好、最坏、平均）都是 O(n log n) 的是？",
+    "options": [
+      "A. 快速排序",
+      "B. 冒泡排序",
+      "C. 归并排序",
+      "D. 插入排序"
+    ],
+    "answer": "C",
+    "explanation": "归并排序无论数据初始分布如何，都进行固定的分割和合并操作，时间复杂度恒为 O(n log n)。快速排序最坏情况（每次 pivot 选到最小/最大）退化到 O(n²)，冒泡和插入都是 O(n²)（除非最优情况）。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "排序",
+      "稳定性"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "列举三种稳定排序和三种不稳定排序。为什么实际语言（如 Python、Java）的内置排序通常采用稳定排序？",
+    "answer": "稳定排序：冒泡排序、插入排序、归并排序、基数排序。不稳定排序：选择排序、快速排序、堆排序、希尔排序。内置排序通常稳定是因为稳定排序支持多关键字排序：先按次要关键字排再按主要关键字排，结果仍然正确。Python 的 sorted() 使用 Timsort（稳定），Java 的 Arrays.sort(Object[]) 使用 Timsort（稳定）。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "稳定",
+      "不稳定",
+      "冒泡",
+      "插入",
+      "归并",
+      "选择",
+      "快速",
+      "堆",
+      "多关键字"
+    ],
+    "explanation": "稳定性在现实场景中很重要。例如学生列表先按姓名排序再按成绩排序——如果不稳定，第二次排序可能打乱同成绩学生的原有姓名顺序。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "查找"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "在包含 100 万个元素的有序数组中，二分查找最多需要比较约多少次？",
+    "options": [
+      "A. 约 10 次",
+      "B. 约 20 次",
+      "C. 约 100 次",
+      "D. 约 50 万次"
+    ],
+    "answer": "B",
+    "explanation": "二分查找的比较次数 ≈ log₂n。log₂(1,000,000) ≈ 20。这意味着即使数据量达到百万级别，也只需约 20 次比较就能找到目标（或确认不存在）。这体现了 O(log n) 算法的威力。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "查找",
+      "哈希表"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "顺序查找、二分查找和哈希查找各自的适用场景是什么？比较它们的时间和空间复杂度。",
+    "answer": "顺序查找 O(n)：数据无序或不支持随机访问，最简单。二分查找 O(log n)：数据有序且支持随机访问（数组），高效但需要预处理排序。哈希查找 O(1) 平均：需要额外空间存储哈希表，适合大量查找操作，不要求有序。选择时权衡：预处理成本、空间开销、查找频率。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "顺序",
+      "无序",
+      "二分",
+      "有序",
+      "哈希",
+      "O(1)",
+      "O(log n)",
+      "O(n)"
+    ],
+    "explanation": "如果只需要查一次，顺序查找最简单（O(n)）；如果需要反复查询同一数据集，排序后用二分（预处理 O(n log n)，查询 O(log n)）或建哈希表（预处理 O(n)，查询 O(1)）更划算。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "综合"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "以下哪种操作是栈（Stack）所特有的，队列（Queue）不支持？",
+    "options": [
+      "A. 在任意位置插入元素",
+      "B. 按值查找元素",
+      "C. 查看和移除最近添加的元素（LIFO）",
+      "D. 查看队首元素"
+    ],
+    "answer": "C",
+    "explanation": "LIFO（后进先出）是栈的特征：最后加入的最先被取出。队列是 FIFO（先进先出）。两者都是受限的线性表，不支持在任意位置插入/删除。选择栈还是队列取决于需要 LIFO 还是 FIFO 的访问模式。",
+    "source": "manual"
+  },
+  {
+    "category": "数据结构",
+    "tags": [
+      "综合"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "从时间复杂度角度比较数组、链表、二叉搜索树（BST）和哈希表在「查找」「插入」「删除」三个操作上的差异（平均情况）。",
+    "answer": "数组：查找 O(1)（按索引）、O(n)（按值）；插入/删除 O(n)（需要移动元素）。链表：查找 O(n)；在已知位置插入/删除 O(1)。BST（平衡）：查找/插入/删除均为 O(log n)。哈希表：查找/插入/删除平均 O(1)，最坏 O(n)（大量冲突）。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "数组",
+      "链表",
+      "BST",
+      "哈希表",
+      "查找",
+      "插入",
+      "删除",
+      "O(1)",
+      "O(log n)",
+      "O(n)"
+    ],
+    "explanation": "没有哪种数据结构在所有操作上都是最优的。根据实际场景选择：频繁索引访问选数组，频繁头部增删选链表，需要有序遍历选 BST，需要快速键值查找选哈希表。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "集合",
+      "set"
+    ],
+    "type": "choice",
+    "difficulty": "easy",
+    "content": "Python 中，以下哪个操作可以找出两个集合的公共元素（交集）？",
+    "options": [
+      "A. s1.union(s2)",
+      "B. s1 | s2",
+      "C. s1 & s2",
+      "D. s1 - s2"
+    ],
+    "answer": "C",
+    "explanation": "& 运算符或 intersection() 方法用于求交集（两个集合的公共元素）。| 或 union() 是并集，- 或 difference() 是差集，^ 或 symmetric_difference() 是对称差集（只出现在其中一个集合中的元素）。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "集合",
+      "set"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，s = {1, 2, 3}; s.add(2); print(s) 输出什么？",
+    "options": [
+      "A. {1, 2, 2, 3}",
+      "B. {1, 2, 3}",
+      "C. 抛出错误",
+      "D. {1, 3, 2}"
+    ],
+    "answer": "B",
+    "explanation": "集合中的元素是唯一的，不允许重复。add(2) 试图添加已存在的元素 2，集合保持不变。如果想一次添加多个元素用 update() 方法。这就是集合的核心特性——自动去重。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "集合",
+      "set"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，为什么集合的查找速度比列表快？",
+    "options": [
+      "A. 集合占更多内存",
+      "B. 集合基于哈希表实现，查找平均 O(1)；列表需要遍历 O(n)",
+      "C. 集合内部是排好序的",
+      "D. 集合用 C 语言实现"
+    ],
+    "answer": "B",
+    "explanation": "Python 的 set 底层使用哈希表，通过哈希函数直接定位元素位置，查找、插入、删除平均 O(1)。列表需要逐个遍历，查找 O(n)。所以当需要频繁做「判断元素是否存在」操作时，用集合比列表高效得多。代价是集合不保持插入顺序（3.7+ 后保持但不应依赖）且不能有重复元素。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "集合",
+      "set"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "Python 中，如何用集合高效地从一个列表中去除重复元素？用集合去重的局限性是什么？",
+    "answer": "去重：list(set(lst)) 或 list(dict.fromkeys(lst))。局限性：(1) 集合无序，去重后元素顺序会改变——如果需保持原顺序可用 dict.fromkeys(lst)（Python 3.7+ 字典有序）；(2) 只有列表中所有元素都是可哈希的（不可变类型）才能用集合去重——如果包含列表或字典等可变元素会报错。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "去重",
+      "set",
+      "无序",
+      "可哈希",
+      "报错",
+      "顺序"
+    ],
+    "explanation": "集合去重是最快的方法（O(n)）。保持顺序的方案：list(dict.fromkeys(lst))。如果列表包含可变元素，需改用逐个遍历判断的 O(n²) 方法。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "元组",
+      "tuple"
+    ],
+    "type": "choice",
+    "difficulty": "easy",
+    "content": "Python 中，元组（tuple）和列表（list）最重要的区别是什么？",
+    "options": [
+      "A. 元组用()，列表用[]",
+      "B. 元组是不可变的（immutable），列表是可变的",
+      "C. 元组比列表慢",
+      "D. 元组只能用数字索引"
+    ],
+    "answer": "B",
+    "explanation": "元组是不可变类型——创建后不能增删改元素。列表是可变的。这导致元组可以作为字典的键（可哈希），而列表不能。元组还更节省内存，适合表示固定不变的数据（如坐标、RGB 颜色值）。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "元组",
+      "tuple"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，以下代码会怎样？\nt = (1, [2, 3])\nt[1].append(4)\nprint(t)",
+    "options": [
+      "A. 报错：元组不可修改",
+      "B. 输出 (1, [2, 3, 4])",
+      "C. 输出 (1, [2, 3])",
+      "D. 输出 (1, [2, 3, 4, 4])"
+    ],
+    "answer": "B",
+    "explanation": "元组的「不可变」指的是元组本身的引用不可变——即 t[0] 和 t[1] 指向的对象不能换。但如果 t[1] 指向的是可变对象（如列表），这个可变对象的内容是可以修改的。t[1] 仍然指向同一个列表，但列表内容变了。这就是「不可变容器内的可变对象」陷阱。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "元组",
+      "tuple"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "Python 中，元组解包（tuple unpacking）是什么？举例说明它在实际编程中的便利之处。",
+    "answer": "元组解包是将元组中的元素同时赋值给多个变量：a, b = (1, 2) 即 a=1, b=2。便利之处：(1) 交换变量 x, y = y, x 一行搞定；(2) 函数返回多个值 return x, y 接收时 a, b = func()；(3) 遍历键值对 for k, v in d.items()。这使 Python 代码简洁优雅。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "解包",
+      "赋值",
+      "交换",
+      "多返回值",
+      "items",
+      "简洁"
+    ],
+    "explanation": "解包（unpacking）是 Python 最具特色的语法之一。高级用法：a, *b = [1,2,3,4] → a=1, b=[2,3,4]（星号表达式收集剩余元素）。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "生成器",
+      "generator"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，生成器（generator）和列表的主要区别是什么？",
+    "options": [
+      "A. 生成器一次性加载所有数据到内存",
+      "B. 生成器是「惰性求值」，每次只产生一个元素，不一次性占用全部内存",
+      "C. 生成器比列表快很多",
+      "D. 生成器支持索引访问"
+    ],
+    "answer": "B",
+    "explanation": "生成器采用惰性求值（lazy evaluation），只在需要时才计算下一个元素，不预先存储所有值。例如 range(1000000) 是生成器（Python 3），不会占用 100 万个整数的内存。而 list(range(1000000)) 会立即创建 100 万个元素的列表。处理大数据流时生成器优势明显。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "生成器",
+      "generator"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，yield 关键字的作用是什么？",
+    "options": [
+      "A. 结束函数的执行",
+      "B. 暂停函数执行并返回一个值，下次从暂停处继续",
+      "C. 导入模块",
+      "D. 释放内存"
+    ],
+    "answer": "B",
+    "explanation": "yield 将普通函数变为生成器函数。调用生成器函数时不执行函数体，而是返回一个生成器对象。每次调用 next()（或在 for 循环中迭代），函数从上次 yield 的位置恢复执行直到遇到下一个 yield。这实现了协程（coroutine）的基本机制。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "生成器",
+      "generator"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "将一个列表推导式的方括号换成圆括号会得到什么？什么时候应该用这种写法？",
+    "answer": "将 [x*2 for x in range(10)] 的方括号换为圆括号 (x*2 for x in range(10)) 得到的是一个生成器表达式（generator expression），不是元组。它惰性求值，不立即创建所有元素。应该用的场景：(1) 数据量很大但只需逐个处理；(2) 将结果传给 sum()、max() 等聚合函数；(3) 任何不需要索引和多次遍历的场景。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "生成器表达式",
+      "圆括号",
+      "惰性",
+      "聚合",
+      "数据量大"
+    ],
+    "explanation": "生成器表达式与列表推导式语法几乎一样，区别只是括号不同。它是内存友好的选择——不需要一次性保存所有结果。但生成器只能遍历一次，用完即空。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "面向对象",
+      "class"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，以下哪个是类的构造方法（初始化方法）？",
+    "options": [
+      "A. __str__",
+      "B. __init__",
+      "C. __main__",
+      "D. __new__"
+    ],
+    "answer": "B",
+    "explanation": "__init__ 是初始化方法，在对象创建后自动调用，用于设置对象的初始属性。self 参数代表实例本身，必须作为第一个参数（但调用时不需要传入，Python 自动传入）。__str__ 用于 str() 和 print()，__new__ 用于创建实例（更底层，通常不需要重写）。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "面向对象",
+      "class"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，以下代码中 self 的含义是什么？\nclass Dog:\n    def bark(self):\n        print('Woof!')",
+    "options": [
+      "A. 类名",
+      "B. 当前调用这个方法的实例对象",
+      "C. 关键字，没有特别含义",
+      "D. 父类引用"
+    ],
+    "answer": "B",
+    "explanation": "self 是约定俗成的名称（也可以用其他名字但强烈不建议），指向调用该方法的实例对象。d = Dog(); d.bark() 时，self 就是 d。Python 自动把调用者传给 self，所以方法定义中必须有 self 参数但调用时不需要手动传。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "面向对象",
+      "继承"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，以下代码会输出什么？\nclass A:\n    def f(self): return 'A'\nclass B(A):\n    def f(self): return 'B'\nb = B()\nprint(b.f())",
+    "options": [
+      "A. A",
+      "B. B",
+      "C. AB",
+      "D. 报错"
+    ],
+    "answer": "B",
+    "explanation": "子类 B 重写（override）了父类 A 的 f 方法。调用 b.f() 时优先使用 B 自己的 f，输出 'B'。这就是方法重写——子类可以重新定义父类的方法来实现不同的行为。如果需要在子类中调用父类的方法，可以用 super().f()。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "面向对象",
+      "继承"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "Python 中，super() 函数的作用是什么？在什么场景下使用？",
+    "answer": "super() 用于在子类中调用父类的方法。最常见的场景：在子类的 __init__ 中调用父类的 __init__ 来复用父类的初始化逻辑。例如 super().__init__(name) 先让父类初始化 name 属性，子类再添加自己的属性。此外也可以调用父类中被重写的任意方法。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "父类",
+      "调用",
+      "__init__",
+      "复用",
+      "重写",
+      "super"
+    ],
+    "explanation": "super() 在多重继承中遵循 MRO（方法解析顺序），确保每个父类的方法只被调用一次，避免了菱形继承中的重复调用问题。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "模块",
+      "import"
+    ],
+    "type": "choice",
+    "difficulty": "easy",
+    "content": "Python 中，import math 和 from math import sqrt 有什么区别？",
+    "options": [
+      "A. 没区别",
+      "B. import math 导入整个模块，使用时需 math.sqrt()；from math import sqrt 直接导入 sqrt 函数，直接用 sqrt()",
+      "C. from math import sqrt 导入整个模块",
+      "D. import math 只能导入数学模块"
+    ],
+    "answer": "B",
+    "explanation": "import math：导入整个 math 模块，使用时必须带模块名前缀 math.sqrt()，避免了命名冲突。from math import sqrt：只导入 sqrt，可以直接用 sqrt()，更简洁但可能与当前作用域的同名变量冲突。推荐使用 import math 方式以保持命名空间清晰。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "模块",
+      "import"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，以下哪个是关于 if __name__ == '__main__' 的正确描述？",
+    "options": [
+      "A. 这是一个错误",
+      "B. 用于判断当前模块是被导入还是直接运行",
+      "C. 定义主函数",
+      "D. 检查 Python 版本"
+    ],
+    "answer": "B",
+    "explanation": "当 Python 文件被直接运行时，__name__ 被设为 '__main__'；当文件被 import 导入时，__name__ 被设为模块名。这个惯用法使得模块既可以被导入（此时不执行 if 块内的代码），又可以独立运行（执行 if 块内的测试或主逻辑）。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "模块",
+      "包"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "Python 中，模块和包有什么区别？如何创建一个简单的包？",
+    "answer": "模块（module）是一个 .py 文件。包（package）是一个包含 __init__.py 文件的目录，可以包含多个模块和子包。创建包：创建一个目录→在目录中放一个 __init__.py 文件（可以为空）→将模块文件放入目录→用 import 包名.模块名 导入。Python 3.3+ 引入了命名空间包，__init__.py 不再强制但推荐保留。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "模块",
+      "包",
+      ".py",
+      "__init__.py",
+      "目录",
+      "导入"
+    ],
+    "explanation": "包让大型项目可以按功能组织代码。目录结构如：mypackage/__init__.py, mypackage/module1.py, mypackage/subpkg/__init__.py。导入：from mypackage import module1 或 import mypackage.subpkg。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "装饰器",
+      "decorator"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，@符号在函数定义前的用法称为什么？",
+    "options": [
+      "A. 注解（annotation）",
+      "B. 装饰器（decorator）",
+      "C. 属性（attribute）",
+      "D. 修饰符（modifier）"
+    ],
+    "answer": "B",
+    "explanation": "装饰器是 Python 中一种特殊的语法糖，用 @decorator_name 写在函数定义前。它本质上是一个接受函数作为参数并返回新函数的高阶函数。常用于：「在不修改原函数代码的前提下，给函数增加额外功能」，如日志记录、性能计时、权限检查等。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "装饰器",
+      "decorator"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "Python 中，以下代码等价于什么？\n@my_decorator\ndef hello():\n    print('Hello')",
+    "options": [
+      "A. hello = my_decorator(hello)",
+      "B. my_decorator = hello()",
+      "C. hello() = my_decorator",
+      "D. 无法等价转换"
+    ],
+    "answer": "A",
+    "explanation": "装饰器语法 @my_decorator 等价于 hello = my_decorator(hello)。即把 hello 函数作为参数传给 my_decorator，用返回值替换原来的 hello。这就是为什么装饰器本质上是一个接受函数返回函数的高阶函数。",
+    "source": "manual"
+  },
+  {
+    "category": "Python",
+    "tags": [
+      "装饰器",
+      "decorator"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "Python 装饰器在实际开发中有哪些常见应用场景？举两个例子。",
+    "answer": "(1) 性能计时：@timer 装饰器包裹函数，记录函数执行前后的时间，计算耗时并打印。(2) 权限检查：@login_required 装饰器检查用户是否登录，未登录则跳转登录页而不是执行原函数。(3) 缓存/记忆化：@lru_cache 缓存函数调用结果，相同参数直接返回缓存避免重复计算。(4) 日志记录：自动记录函数的调用参数和返回值。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "计时",
+      "权限",
+      "缓存",
+      "日志",
+      "包裹",
+      "高阶函数"
+    ],
+    "explanation": "装饰器的核心价值：AOP（面向切面编程）——将横切关注点（日志、安全、缓存等）与业务逻辑解耦。不用装饰器的话，这些代码会散落在每个函数中，难以维护。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "索引"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "SQL 中，索引的主要作用是什么？",
+    "options": [
+      "A. 加快数据查询速度",
+      "B. 保证数据不丢失",
+      "C. 自动备份数据库",
+      "D. 限制用户访问"
+    ],
+    "answer": "A",
+    "explanation": "索引类似于书的目录：通过索引可以快速定位数据，避免全表扫描。但索引也有代价：(1) 额外占用存储空间；(2) INSERT/UPDATE/DELETE 时需要同时维护索引，写入变慢。因此不是越多越好——只为查询频繁的列建索引。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "索引"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "SQL 中，主键（PRIMARY KEY）和唯一索引（UNIQUE INDEX）的区别是什么？",
+    "options": [
+      "A. 没有区别",
+      "B. 主键不允许 NULL 值且每表只能有一个，唯一索引允许一个 NULL 值且每表可以有多个",
+      "C. 主键可以有多个，唯一索引只能有一个",
+      "D. 主键比唯一索引慢"
+    ],
+    "answer": "B",
+    "explanation": "主键约束：值必须唯一且不为 NULL，一张表只能有一个主键。唯一索引：值必须唯一但允许一个 NULL（在大多数数据库中），一张表可以有多个唯一索引。主键会自动创建索引。两者都能加速基于该列的查询。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "索引"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "什么情况下不应该给某一列建索引？举例说明索引使用的代价。",
+    "answer": "不应该建索引的情况：(1) 列的值非常少（如性别只有男/女），索引区分度低，数据库可能仍选择全表扫描；(2) 表非常小（几百行），全表扫描已经很快；(3) 该列频繁更新，每次更新都要维护索引，写入代价高；(4) 该列很少出现在 WHERE/ORDER BY/JOIN 条件中——用不上。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "区分度",
+      "全表扫描",
+      "频繁更新",
+      "维护代价",
+      "小表",
+      "存储空间"
+    ],
+    "explanation": "创建索引是读取速度与写入速度的权衡。经验法则：为查询中频繁作为条件的列建索引，但不盲目建。可以用 EXPLAIN 分析查询计划来判断索引是否被使用。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "事务"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "SQL 事务的 ACID 特性中，I 代表什么？",
+    "options": [
+      "A. Index（索引）",
+      "B. Isolation（隔离性）",
+      "C. Integrity（完整性）",
+      "D. Inheritance（继承）"
+    ],
+    "answer": "B",
+    "explanation": "ACID = Atomicity（原子性：事务要么全部执行，要么全部不执行）+ Consistency（一致性：事务执行前后数据库保持一致状态）+ Isolation（隔离性：并发事务之间互不干扰）+ Durability（持久性：事务一旦提交，结果永久保存）。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "事务"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "SQL 中，以下哪个场景最适合使用事务？",
+    "options": [
+      "A. 简单的 SELECT 查询",
+      "B. 银行转账——从一个账户扣钱并向另一个账户加钱",
+      "C. 修改表结构",
+      "D. 创建索引"
+    ],
+    "answer": "B",
+    "explanation": "银行转账涉及两个操作（A 扣钱 + B 加钱），必须作为一个整体：要么都成功，要么都失败回滚。如果扣钱后系统崩溃导致没加钱，就会造成数据不一致。事务保证这两个操作要么全部生效，要么全部撤销。这是事务最典型的应用场景。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "事务"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "ROLLBACK 和 COMMIT 的作用分别是什么？什么是自动提交（autocommit）？",
+    "answer": "COMMIT：确认并永久保存事务中的所有更改。ROLLBACK：撤销事务中所有未提交的更改，回滚到事务开始前的状态。自动提交（autocommit）是指每条 SQL 语句自动成为一个独立事务并立即提交——很多数据库客户端默认开启自动提交，这意味着 DELETE 误操作无法 ROLLBACK。做批量操作时建议手动 BEGIN TRANSACTION 关闭自动提交。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "COMMIT",
+      "ROLLBACK",
+      "撤销",
+      "永久保存",
+      "自动提交",
+      "autocommit"
+    ],
+    "explanation": "事务是数据库可靠性的基石。写 DELETE/UPDATE 前先 BEGIN TRANSACTION，确认无误再 COMMIT，出错就 ROLLBACK——这是一种好习惯。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "视图"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "SQL 中，视图（VIEW）是什么？",
+    "options": [
+      "A. 表的物理备份",
+      "B. 一个存储的查询（虚拟表），不存储实际数据",
+      "C. 数据库的图形化界面",
+      "D. 一种索引类型"
+    ],
+    "answer": "B",
+    "explanation": "视图是一个「保存的查询语句」——看起来用起来都像表，但本身不存储数据。查询视图时，数据库动态执行视图定义的 SELECT 语句。优势：(1) 简化复杂查询（把多表 JOIN 封装成视图）；(2) 安全控制（只暴露部分列给用户）；(3) 逻辑独立性。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "视图"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "SQL 视图有哪些优缺点？什么情况下适合使用视图？",
+    "answer": "优点：(1) 简化复杂查询——将多表 JOIN 封装成一个简单的 SELECT FROM view；(2) 安全——隐藏敏感列，只暴露必要数据给特定用户；(3) 逻辑独立——表结构变化时可以修改视图定义而不用修改应用程序代码。缺点：(1) 每次查询视图都要执行底层查询，可能性能差；(2) 不是所有视图都可更新（多表 JOIN 通常不能 INSERT/UPDATE）。适合场景：需要频繁查询的复杂统计、需要权限控制的敏感数据。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "简化",
+      "封装",
+      "安全",
+      "隐藏",
+      "性能",
+      "不可更新"
+    ],
+    "explanation": "视图是 SQL 中实现「逻辑层抽象」的工具。对于性能敏感的复杂查询，可以考虑物化视图（Materialized View，将结果实际存储），但 SQLite 不支持物化视图。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "约束"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "SQL 中，外键约束（FOREIGN KEY）的作用是什么？",
+    "options": [
+      "A. 加快查询速度",
+      "B. 确保一个表中的值必须匹配另一个表（引用表）中的值",
+      "C. 让表可以存储更多数据",
+      "D. 自动为表创建备份"
+    ],
+    "answer": "B",
+    "explanation": "外键约束保证了参照完整性（referential integrity）。例如 orders 表的 student_id 设为外键引用 students 表的 id，则 orders 中不能插入不存在的 student_id，同时 students 中不能删除有订单的学生（或级联删除）。这防止了「孤儿数据」。",
+    "source": "manual"
+  },
+  {
+    "category": "SQL",
+    "tags": [
+      "约束"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "SQL 中常见的约束类型有哪些？各有什么作用？",
+    "answer": "(1) NOT NULL：列值不能为空；(2) UNIQUE：列值在整个表中唯一；(3) PRIMARY KEY：NOT NULL + UNIQUE，每表只能一个，唯一标识每条记录；(4) FOREIGN KEY：引用另一个表的主键，保证参照完整性；(5) CHECK：自定义条件约束（如 CHECK(age>=0)）；(6) DEFAULT：设置默认值。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "NOT NULL",
+      "UNIQUE",
+      "PRIMARY KEY",
+      "FOREIGN KEY",
+      "CHECK",
+      "DEFAULT"
+    ],
+    "explanation": "约束是数据库层面的数据完整性保证。相比在应用程序中校验，数据库约束是最后一道防线——更可靠，不会被绕过。建议把核心数据规则尽可能定义为数据库约束。",
+    "source": "manual"
+  },
+  {
+    "category": "C",
+    "tags": [
+      "结构体"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "C 语言中，以下结构体定义哪个是正确的？",
+    "options": [
+      "A. struct Student { char name[20]; int age; }",
+      "B. struct { char name[20]; int age; }",
+      "C. Student struct { char name[20]; int age; }",
+      "D. 以上 A 和 B 都正确"
+    ],
+    "answer": "D",
+    "explanation": "A 是定义了一个名为 Student 的结构体类型，B 定义了一个匿名结构体（使用受限）。声明变量：struct Student s1; 或直接在定义后写变量名。通常配合 typedef 避免每次写 struct 关键字：typedef struct { ... } Student;",
+    "source": "manual"
+  },
+  {
+    "category": "C",
+    "tags": [
+      "结构体"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "C 语言中，如何访问结构体变量的成员？",
+    "options": [
+      "A. 用 . 运算符（结构体变量）和 -> 运算符（结构体指针）",
+      "B. 只能用 . 运算符",
+      "C. 只能用 -> 运算符",
+      "D. 用 [] 运算符"
+    ],
+    "answer": "A",
+    "explanation": "对于结构体变量，用 . 访问成员：s.name。对于结构体指针，用 -> 访问成员：p->name，等价于 (*p).name。-> 是 . 和 * 的组合语法糖。",
+    "source": "manual"
+  },
+  {
+    "category": "C",
+    "tags": [
+      "结构体"
+    ],
+    "type": "open",
+    "difficulty": "easy",
+    "content": "C 语言中，typedef 在结构体中的常见用法是什么？为什么要用它？",
+    "answer": "typedef 用于给类型起别名。在结构体中常见用法：typedef struct { char name[20]; int age; } Student; 之后就可以直接用 Student 声明变量（Student s1;），而不需要每次都写 struct 关键字。typedef 让代码更简洁，类型名更像内置类型。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "别名",
+      "typedef",
+      "struct",
+      "简洁",
+      "Student"
+    ],
+    "explanation": "typedef 不创造新类型，只是给已有类型起一个更方便使用的名字。在大型 C 项目中 typedef 非常普遍。",
+    "source": "manual"
+  },
+  {
+    "category": "C",
+    "tags": [
+      "内存管理",
+      "malloc"
+    ],
+    "type": "choice",
+    "difficulty": "medium",
+    "content": "C 语言中，malloc 和 free 的作用是什么？",
+    "options": [
+      "A. malloc 在堆上申请内存，free 释放 malloc 申请的内存",
+      "B. malloc 在栈上申请内存，free 释放所有内存",
+      "C. malloc 创建变量，free 删除变量",
+      "D. malloc 读取文件，free 关闭文件"
+    ],
+    "answer": "A",
+    "explanation": "malloc(size) 在堆（heap）上动态分配指定大小的内存，返回 void* 指针。free(ptr) 释放之前 malloc 分配的内存。这对操作必须配对：每个 malloc 都要有对应的 free，否则造成内存泄漏。忘记 free 或多次 free 同一块内存都是严重 bug。",
+    "source": "manual"
+  },
+  {
+    "category": "C",
+    "tags": [
+      "内存管理"
+    ],
+    "type": "open",
+    "difficulty": "medium",
+    "content": "C 语言中，栈（stack）和堆（heap）存储的变量有什么区别？各自的生命周期是怎样的？",
+    "answer": "栈存储：局部变量和函数参数，由编译器自动管理。函数调用时在栈上分配，函数返回时自动释放——生命周期与函数调用绑定。堆存储：通过 malloc/calloc 手动申请的内存，由程序员手动 free 释放——生命周期由程序员控制。栈速度快但大小有限（通常几 MB），堆空间大但需要手动管理且分配释放较慢。",
+    "answer_match_mode": "keywords",
+    "keywords": [
+      "栈",
+      "堆",
+      "局部变量",
+      "malloc",
+      "手动",
+      "自动",
+      "生命周期"
+    ],
+    "explanation": "理解栈与堆是 C 语言内存管理的核心。栈上的局部变量不能返回其地址（函数返回后栈空间被回收，指针变成野指针）。堆上的内存如果不 free 即使程序未结束也一直占用（内存泄漏）。",
+    "source": "manual"
   }
 ]
